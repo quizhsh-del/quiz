@@ -1,0 +1,99 @@
+{% comment %} {% include 'fheader.html' %}
+<h2>quizdisplay</h2>
+<form method ="post" action={%url "quiz_insert"%}> 
+    {% csrf_token %}
+    {% for q in quizdata %}
+    <h3>{{ q.question_id }}</h3>
+    <ul>
+        <li> {{q.option_A}}</li>
+        <li> {{q.option_B}}</li>
+        <li> {{q.option_C}}</li>
+        <li> {{q.option_D}}</li>
+    </ul>
+    <hr>
+    {% endfor %}
+    <button type = "submit">register</button>
+</form> {% endcomment %}
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Questions</title>
+</head>
+<body>
+
+<h2>Quiz Question List</h2>
+
+<table border="1" cellpadding="8" cellspacing="0">
+    <tr>
+        <th>Quiz ID</th>
+        <th>Question ID</th>
+        <th>Option A</th>
+        <th>Option B</th>
+        <th>Option C</th>
+        <th>Option D</th>
+        <th>Correct Option</th>
+        <th>Difficulty</th>
+        <th>Actions</th>
+    </tr>
+
+    {% for q in quizdata %}
+    <tr>
+        <td>{{ q.quiz_id }}</td>
+        <td>{{ q.question_id }}</td>
+        <td>{{ q.option_A }}</td>
+        <td>{{ q.option_B }}</td>
+        <td>{{ q.option_C }}</td>
+        <td>{{ q.option_D }}</td>
+        <td>{{ q.correct_option }}</td>
+        <td>{{ q.Difficulty_Level }}</td>
+
+        <td>
+            <a href="{% url 'quiz_edit' q.quiz_id %}">Edit</a> |
+            <a href="{% url 'quiz_delete' q.quiz_id %}" >Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html> {% endcomment %}
+{% load widget_tweaks %}
+<div>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+    <div class="max-w-4xl mx-auto mt-10 bg-white p-8 rounded-md shadow-xl/30 border bg-gray-500 border-gray-300  ">
+        <h1 class="text-center text-black-600 dark:text-black-400 text-xl mb-6">Quiz Question List</h1>
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Quiz ID</th>
+                    <th class="py-2 px-4 border-b">Question ID</th>
+                    <th class="py-2 px-4 border-b">Option A</th>
+                    <th class="py-2 px-4 border-b">Option B</th>
+                    <th class="py-2 px-4 border-b">Option C</th>
+                    <th class="py-2 px-4 border-b">Option D</th>
+                    <th class="py-2 px-4 border-b">Correct Option</th>
+                    <th class="py-2 px-4 border-b">Difficulty</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for q in quizdata %}
+                <tr>
+                    <td class="py-2 px-4 border-b">{{ q.quiz_id }}</td>
+                    <td class="py-2 px-4 border-b">{{ q.question_id }}</td>
+                    <td class="py-2 px-4 border-b">{{ q.option_A }}</td>
+                    <td class="py-2 px-4 border-b">{{ q.option_B }}</td>
+                    <td class="py-2 px-4 border-b">{{ q.option_C }}</td>
+                    <td class="py-2 px-4 border-b">{{ q.option_D }}</td>
+                    <td class="py-2 px-4 border-b">{{ q.correct_option }}</td>
+                    <td class="py-2 px-4 border-b">{{ q.Difficulty_Level }}</td>
+                    <td class="py-2 px-4 border-b">
+                        <a href="{% url 'quiz_edit' q.quiz_id %}" class="text-blue-500 hover:underline">Edit</a> |
+                        <a href="{% url 'quiz_delete' q.quiz_id %}" class="text-red-500 hover:underline">Delete</a>
+                    </td>
+                    {% endfor %}
+                </tr>
+            </tbody>
+            

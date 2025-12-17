@@ -1,0 +1,44 @@
+{% comment %} <h2>teacher list</h2>
+{% include 'uheader.html' %}
+{% for t in teacherdata %}
+    <h3>{{ t.faculty_name }}</h3>
+    <ul>
+        <li>department name :{{t.department_name}}</li>
+        <li>faculty id :{{t.faculty_id}}</li>
+       
+    </ul>
+    <hr>
+    {% endfor %} {% endcomment %}
+<!DOCTYPE html>
+{% include 'uheader.html' %}
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+       <h3>{{ t.faculty_name }}</h3>
+       <table border="1" cellpadding="10">
+           <tr>  
+            <th>department_name</th>
+            <th>faculty_id</th>
+             <th>faculty_name</th>
+        </tr>
+        {% for t in teacherdata  %}
+        <tr>
+        <td>{{t.department_name}}</td>
+        <td>{{t.faculty_id}}</td>
+         <td>{{t.faculty_name}}</td>
+        
+        <td>
+           <a href="{% url 'faculty_edit' t.faculty_id %}">Edit</a> |
+            <a href="{% url 'faculty_delete' t.faculty_id %}" onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+    </tr>
+        {% endfor %}
+        </table>
+</html>

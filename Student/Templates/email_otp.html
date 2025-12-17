@@ -1,0 +1,7 @@
+<form method="post" action = "{% url "student_email_page" %}">
+
+{% csrf_token %}
+<label>Email:</label>
+<input type = "email" name="email_id" id="">
+<button type = "submit">sent otp</button>
+</form>

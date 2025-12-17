@@ -1,0 +1,7 @@
+{% include 'fheader.html' %}
+<h2>quizinsert</h2>
+<form method ="post" action ={% url "quiz_in" %}>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type = "submit">register</button>
+</form>

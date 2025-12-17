@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% include 'fheader.html' %}
+
+
+{% comment %} <html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+       <h3>{{ s.student_name }}</h3>
+       <table border="1" cellpadding="10">
+           <tr>  
+            <th>studentdepartment name</th>
+            <th>student name</th>
+            <th>student no</th>
+            <th>year</th>
+            <th>studentemail id</th>
+        </tr>
+        {% for s in studentdata %}
+        <tr>
+        <td>{{s.department_name}}</td>
+        <td>{{s.student_name}}</td>
+        <td>{{s.roll_no}}</td>
+        <td>{{s.year}}</td>
+        <td>{{ s.email_id}}</td>
+        
+        <td>
+           <a href="{% url 'student_edit' s.roll_no %}">Edit</a> |
+            <a href="{% url 'student_delete' s.roll_no %}" onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+    </tr>
+        {% endfor %}
+        </table>
+        
+</html> {% endcomment %}
+{% load widget_tweaks %}
+<div>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+    <div class="max-w-7xl mx-auto mt-10 bg-white p-8 rounded-md shadow-xl/30 border bg-gray-500 border-gray-300  ">
+        <h1 class="text-center text-black-600 dark:text-black-400 text-xl mb-6">Student List</h1>
+        <table class="min-w-full bg-white">
+            <thead>
+                <tr>
+                    <th class="py-2 px-4 border-b">Department Name</th>
+                    <th class="py-2 px-4 border-b">Student Name</th>
+                    <th class="py-2 px-4 border-b">Roll No</th>
+                    <th class="py-2 px-4 border-b">Year</th>
+                    <th class="py-2 px-4 border-b">Email ID</th>
+                    <th class="py-2 px-4 border-b">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in studentdata %}
+                <tr>
+                    <td class="py-2 px-4 border-b">{{ s.department_name }}</td>
+                    <td class="py-2 px-4 border-b">{{ s.student_name }}</td>
+                    <td class="py-2 px-4 border-b">{{ s.roll_no }}</td>
+                    <td class="py-2 px-4 border-b">{{ s.year }}</td>
+                    <td class="py-2 px-4 border-b">{{ s.email_id }}</td>
+                    <td class="py-2 px-4 border-b">
+                        <a href="{% url 'student_edit' s.roll_no %}" class="text-blue-500 hover:underline">Edit</a> |
+                        <a href="{% url 'student_delete' s.roll_no %}" onclick="return confirm('Are you sure?');" class="text-red-500 hover:underline">Delete</a>
+                        {% endfor %}
+                    </td>
+                </tr>

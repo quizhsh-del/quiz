@@ -1,0 +1,35 @@
+{% comment %} {% include 'fheader.html' %}
+<h2> questioninsert</h2>
+<form method ="post" action="{%url 'question_inn'%}"> 
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type = "submit">register</button>
+</form> {% endcomment %}
+
+{% load widget_tweaks %}
+<div>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+    <div class="max-w-md mx-auto mt-10 bg-white p-8 rounded
+-xl/30 shadow-xl/30 border bg-gray-500 border-gray-300  ">
+        <h1 class="text-center text-black-600 dark:text-black-400 text-xl">Insert Question</h1>
+        <form method="POST" action={% url "question_inn" %}>
+            {% csrf_token %}
+            <div>
+                <label class="block text-gray-700">
+                    {{ form.course_name.label_tag }}
+                    {{ form.course_name|add_class:"w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" }}
+                    
+                    {{ form.year.label_tag }}
+                    {{ form.year|add_class:"w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" }}
+
+                    {{ form.subject.label_tag }}
+                    {{ form.subject|add_class:"w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" }}
+
+                   
+                </label>
+            </div>
+            <div class="flex justify-center">
+            <button type="submit"
+                class=" items-center w-60 bg-blue-500 shadow-lg shadow-blue-500/50 ring-2 ring-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 mt-4 duration-700 ">
+                Insert

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Faculty</title>
+</head>
+<body>
+
+<h2>Edit Faculty Details</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit">Update</button>
+</form>
+
+<br>
+<a href="{% url 'teachers_list' %}">Back to Teacher List</a>
+
+</body>
+</html>

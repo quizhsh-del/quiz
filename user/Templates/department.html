@@ -1,0 +1,6 @@
+<h2>departmentlist</h2>
+<form method ="post" action={% url "department_in" %}>
+    {% csrf_token %}
+    {{ forms.as_p }}
+    <button type = "submit">register</button>
+</form>

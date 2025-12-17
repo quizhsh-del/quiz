@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz And PYQ  System </title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-violet-50 text-violet-800">
+
+    <!-- ====================== HEADER ====================== -->
+    <header class="bg-white shadow-sm">
+        <nav class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
+            
+            <img src="{% static 'images/download.jpg.webp' %}" alt="Logo" class="h-25 w-20 mr-3" />
+            <h1 class="text-2xl font-bold text--600">
+                Quiz And PYQ Management System....
+            </h1>
+
+            <div class="space-x-4">
+                 <a href="{% url 'admin_home' %}"
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700 ">
+                admin Login
+                <a href="{% url 'student_login' %}"
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700">
+                student login
+                </a>
+                <a href="{% url 'login' %}"
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700">
+                faculty Login
+                </a>
+            </div>
+        </nav>
+    </header>
+     <!-- ====================== HERO SECTION ====================== -->
+    <section class="max-w-7xl mx-auto px-6 py-20 text-center rounded-xl bg-cover bg-center bg-no-repeat"
+        style="background-image: url('{% static 'images/quizz.jpg.png' %}');">
+        <div class="backdrop-brightness-50 py-20 px-5 rounded-xl">
+            <h2 class="text-4xl font-bold text-white mb-4 drop-shadow">
+                Welcome to the Quiz and PYQ Management System
+            </h2>
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto drop-shadow">
+                Your one-stop solution for managing quizzes and previous year questions efficiently and effectively.
+
+            </p>
+        </div>
+    </section>
+ <!-- ====================== MODULES SECTION ====================== -->
+     <section class="max-w-7xl mx-auto px-6 py-10 grid md:grid-cols-3 gap-8">
+
+        <!-- student -->
+         <div class="flex justify-center">
+        <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
+            <h3 class="text-xl font-semibold mb-3 text--600">Student Module</h3>
+            <p class="text-gray-600 text-sm mb-4">
+              Student can  Access quizzes, view previous year questions, and track your progress all in one place.``
+            </p>
+        </div> 
+        </div>
+        <!-- Faculty -->
+        <div class="flex justify-center">   
+        <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
+            <h3 class="text-xl font-semibold mb-3 text--600">Faculty Module</h3>
+            <p class="text-gray-600 text-sm mb-4">
+                Faculty can create and manage quizzes, upload previous year questions, and monitor student performance with ease.
+            </p>
+        </div>
+        </div>
+        <!-- Admin -->
+        <div class="flex justify-center">
+        <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
+            <h3 class="text-xl font-semibold mb-3 text--600">Admin Module</h3>
+            <p class="text-gray-600 text-sm mb-4">
+                Admin can oversee the entire system, manage users, and ensure smooth operation of quizzes and question banks.
+            </p>
+        </div>
+        </div>
+        
+
+    </section>
+      <!-- ====================== FOOTER ====================== -->
+    <footer class="bg-white mt-16 py-4 border-t">
+        <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
+            © 2025 Your College / Project Name — All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+
+</html>
+
+
+
+
+     

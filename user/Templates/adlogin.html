@@ -1,0 +1,6 @@
+<form method ="post" >
+    {% csrf_token %}
+    {{ forms.user_id.label_tag }}{{ forms.user_id }}</br>
+    {{ forms.password.label_tag }}{{ forms.password }}</br>
+    <button type = "submit">login</button>
+</form>

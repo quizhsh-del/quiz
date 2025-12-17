@@ -1,0 +1,24 @@
+{% load static %}
+
+<header class="bg-black shadow-sm">
+    <script src="https://cdn.tailwindcss.com"></script>
+        <nav class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between ">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'images/download.jpg.webp' %}" alt="Logo" class="h-25 w-20 mr-3" />
+            </a>
+            <h1 class="text-2xl font-bold text-green-600">
+                Quiz and PYQ Management System
+            </h1>
+
+            <div class="space-x-4">
+                <a href="{% url 'student_login' %}"
+                    class="px-2 py-2 text-sm font-medium bg-green-600 text-white rounded hover:bg-green-700">
+                    Register
+                </a>
+                <a href="{% url 'admin_home' %}"
+                    class="px-4 py-2 text-sm font-medium border border-green-600 text-green-600 rounded hover:bg-blue-50">
+                    Login
+                </a>
+            </div>
+        </nav>
+    </header>
