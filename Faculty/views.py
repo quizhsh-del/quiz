@@ -158,3 +158,8 @@ def upload_question_action(request):#view action
 def uploadquestion(request):
     qf = questionsForm()
     return render(request,'uquestions.html', {'form':qf})
+
+def pyqquestiondelete(request, subject_id):
+    q = get_object_or_404(questions, subject_id=subject_id)
+    q.delete()
+    return redirect('question_displays')

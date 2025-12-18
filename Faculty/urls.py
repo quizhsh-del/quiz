@@ -18,7 +18,7 @@ path('student/edit/<str:roll_no>/', views.student_edit, name='student_edit'),
 path('student/delete/<str:roll_no>/', views.student_delete, name='student_delete'),
 path('quiz/edit/<str:quiz_id>/', views.quiz_edit, name='quiz_edit'),
 path('quiz/delete/<str:quiz_id>/', views.quiz_delete, name='quiz_delete'),
-
+path('question/delete/<str:subject_id>/', views.pyqquestiondelete, name='pyq_question_delete'),
 
  #action performed
  path('facultyaction',views.faculty_reg,name='faculty_reg'),

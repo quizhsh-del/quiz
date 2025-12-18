@@ -12,6 +12,7 @@
     </ul>
 </div> {% endcomment %}
 {% load static %}
+{% load widget_tweaks %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,36 +26,39 @@
 
 </head>
 
-<body class="bg-violet-50 text-violet-800">
+<body class="bg-black-50 text-black-800">
 
     <!-- ====================== HEADER ====================== -->
-    <header class="bg-white shadow-sm">
+    <header class=" bg-black shadow-sm">
+
         <nav class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
             
             <img src="{% static 'images/download.jpg.webp' %}" alt="Logo" class="h-25 w-20 mr-3" />
-            <h1 class="text-2xl font-bold text--600">
-                Quiz And PYQ Management System....
+            <h1 class="text-2xl font-bold text-white-600"> 
+                
             </h1>
 
             <div class="space-x-4">
                  <a href="{% url 'student_register' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700 ">
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700 ">
                 student register
                 <a href="{% url 'question_insert' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700">
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
                 upload course
                 </a>
                 <a href="{% url 'upload_question' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700">
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
                     upload question
             </a>
                 <a href="{% url 'quiz_insert' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700">
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
                 Quiz Insert
                 </a>
                 <a href="{% url 'faculty_home' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-black rounded hover:bg-gray-700">
+                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
                 home
                 </a>
             </div>
         </nav>
+    </header>
+</body> 

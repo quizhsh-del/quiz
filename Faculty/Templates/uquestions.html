@@ -1,6 +1,6 @@
-{% comment %} 
+ 
  {% include 'fheader.html' %}
-<form  action="{% url 'upload_question_action' %}" method="POST" enctype="multipart/form-data" >
+{% comment %} <form  action="{% url 'upload_question_action' %}" method="POST" enctype="multipart/form-data" >
     {% csrf_token %}
     
      {{ form.as_p }}
@@ -9,11 +9,10 @@
 </form>  {% endcomment %}
 
 {% load widget_tweaks %}
-<div>
+<div class ="bg-blue-100 min-h-screen flex items-center justify-center">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-    <div class="max-w-md mx-auto mt-10 bg-white p-8 rounded
--md shadow-xl/30 border bg-gray-500 border-gray-300  ">
+    <div class="max-w-md mx-auto mt-10 bg-white p-8 rounded-md shadow-xl/30 border bg-gray-500 border-gray-300  ">
         <h1 class="text-center text-black-600 dark:text-black-400 text-xl">Upload PYQ Questions</h1>
         <form action="{% url 'upload_question_action' %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}

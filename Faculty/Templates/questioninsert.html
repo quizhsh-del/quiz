@@ -1,10 +1,10 @@
-{% comment %} {% include 'fheader.html' %}
-<h2> questioninsert</h2>
+ {% include 'fheader.html' %}
+{% comment %} <h2> questioninsert</h2>
 <form method ="post" action="{%url 'question_inn'%}"> 
     {% csrf_token %}
     {{ form.as_p }}
     <button type = "submit">register</button>
-</form> {% endcomment %}
+</form>  {% endcomment %}
 
 {% load widget_tweaks %}
 <div>
@@ -33,3 +33,12 @@
             <button type="submit"
                 class=" items-center w-60 bg-blue-500 shadow-lg shadow-blue-500/50 ring-2 ring-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-400 mt-4 duration-700 ">
                 Insert
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</body>
+</html>
