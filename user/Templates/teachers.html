@@ -11,34 +11,37 @@
     {% endfor %} {% endcomment %}
 <!DOCTYPE html>
 {% include 'uheader.html' %}
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-       <h3>{{ t.faculty_name }}</h3>
-       <table border="1" cellpadding="10">
-           <tr>  
-            <th>department_name</th>
-            <th>faculty_id</th>
-             <th>faculty_name</th>
-        </tr>
-        {% for t in teacherdata  %}
-        <tr>
-        <td>{{t.department_name}}</td>
-        <td>{{t.faculty_id}}</td>
-         <td>{{t.faculty_name}}</td>
-        
-        <td>
-           <a href="{% url 'faculty_edit' t.faculty_id %}">Edit</a> |
-            <a href="{% url 'faculty_delete' t.faculty_id %}" onclick="return confirm('Are you sure?');">Delete</a>
-        </td>
-    </tr>
-        {% endfor %}
-        </table>
-</html>
+{% load widget_tweaks %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Teacher List - Quiz And PYQ System</title>
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<!-- teacher list table-->
+<body class="bg-violet-50 text-violet-800">
+    <section class="max-w-7xl mx-auto px-6 py-10">
+        <h2 class="text-3xl font-bold mb-6 text-center">Teacher List</h2>
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
+                <thead>
+                    <tr class="bg-violet-200 text-violet-800">
+                        <th class="py-3 px-6 border-b border-gray-300 text-left">Faculty Name</th>
+                        <th class="py-3 px-6 border-b border-gray-300 text-left">Department Name</th>
+                        <th class="py-3 px-6 border-b border-gray-300 text-left">Faculty ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for t in teacherdata %}
+                    <tr class="hover:bg-violet-100">
+                        <td class="py-3 px-6 border-b border-gray-300">{{ t.faculty_name }}</td>
+                        <td class="py-3 px-6 border-b border-gray-300">{{ t.department_name }}</td>
+                        <td class="py-3 px-6 border-b border-gray-300">{{ t.faculty_id }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>

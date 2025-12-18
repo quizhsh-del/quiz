@@ -1,7 +1,71 @@
-<form method="post" action = "{% url "student_email_page" %}">
+{% comment %} <form method="post" action = "{% url "student_email_page" %}">
 
 {% csrf_token %}
 <label>Email:</label>
 <input type = "email" name="email_id" id="">
 <button type = "submit">sent otp</button>
-</form>
+</form> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Email Verification</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 flex items-center justify-center">
+
+    <!-- Card -->
+    <div class="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
+
+        <!-- Header -->
+        <div class="text-center mb-6">
+            <div class="mx-auto w-14 h-14 flex items-center justify-center rounded-full bg-blue-600 text-white text-2xl font-bold">
+                ✉️
+            </div>
+            <h2 class="mt-4 text-2xl font-bold text-gray-800">
+                Email Verification
+            </h2>
+            <p class="text-gray-500 text-sm mt-1">
+                We will send a one-time password to your email
+            </p>
+        </div>
+
+        <!-- Form -->
+        <form method="POST" action="{% url 'student_email_page' %}" class="space-y-5">
+            {% csrf_token %}
+
+            <div>
+                <label class="block text-gray-700 font-medium mb-1">
+                    Email Address
+                </label>
+                <input
+                    type="email"
+                    name="email_id"
+                    required
+                    placeholder="Enter your email"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg
+                           focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold
+                       hover:bg-blue-700 transition duration-300 shadow-md"
+            >
+                Send OTP
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <p class="text-center text-gray-500 text-sm mt-6">
+            Make sure you enter a valid email address
+        </p>
+    </div>
+
+</body>
+</html>

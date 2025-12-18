@@ -1,10 +1,10 @@
-{% comment %} {% include 'uheader.html' %}
-<h2> faculty register page </h2>
+ {% include 'uheader.html' %}
+{% comment %} <h2> faculty register page </h2>
 <form method ="post" action={% url "faculty_reg" %}>
     {% csrf_token %}
     {{ form.as_p }}
     <button type = "submit">register</button>
-</form> {% endcomment %}
+</form> {% endcomment %} 
 
 {% load widget_tweaks %}
 

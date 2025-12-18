@@ -74,47 +74,63 @@ class student_registrationForm (forms.ModelForm):
             
         }
 
-class quizForm (forms.ModelForm):
+class quizForm(forms.ModelForm):
+
+    CORRECT_OPTION_CHOICES = [
+        ('A', 'A'),
+        ('B', 'B'),
+        ('C', 'C'),
+        ('D', 'D'),
+    ]
+
+    DIFFICULTY_CHOICES = [
+        ('Easy', 'Easy'),
+        ('Medium', 'Medium'),
+        ('Hard', 'Hard'),
+    ]
+
+    correct_option = forms.ChoiceField(
+        choices=CORRECT_OPTION_CHOICES,
+        widget=forms.Select(attrs={
+            "class": "form-control"
+        })
+    )
+
+    Difficulty_Level = forms.ChoiceField(
+        choices=DIFFICULTY_CHOICES,
+        widget=forms.Select(attrs={
+            "class": "form-control"
+        })
+    )
+
     class Meta:
-        model=quiz
-        fields='__all__'
-        widgets ={
+        model = quiz
+        fields = '__all__'
+        widgets = {
             'quiz_id': forms.TextInput(attrs={
                 "placeholder": "Enter quiz id",
                 "class": "form-control",
-            }),#customized text input
+            }),
             'question_id': forms.TextInput(attrs={
                 "placeholder": "Enter question id",
                 "class": "form-control",
             }),
-            'correct_option': forms.TextInput(attrs={
-                "placeholder": "Enter correct option",
-                "class": "form-control",
-            }),
             'option_A': forms.TextInput(attrs={
-                "placeholder": "Enter option ",
+                "placeholder": "Enter option",
                 "class": "form-control",
             }),
             'option_B': forms.TextInput(attrs={
-                "placeholder": "Enter option ",
+                "placeholder": "Enter option",
                 "class": "form-control",
             }),
             'option_C': forms.TextInput(attrs={
-                "placeholder": "Enter option ",
+                "placeholder": "Enter option",
                 "class": "form-control",
             }),
             'option_D': forms.TextInput(attrs={
-                "placeholder": "Enter option ",
+                "placeholder": "Enter option",
                 "class": "form-control",
             }),
-             'Difficulty_Level': forms.TextInput(attrs={
-                "placeholder": "Enter level",
-                "class": "form-control",
-            }),
-
-
-
-            
         }
 
 
