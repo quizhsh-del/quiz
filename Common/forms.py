@@ -235,3 +235,21 @@ class feedbackForm(forms.ModelForm):
             
             
         }
+from django import forms
+from .models import question_bank
+
+class PYQFilterForm(forms.Form):
+    semester = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Enter Semester"
+        })
+    )
+
+    subject = forms.ModelChoiceField(
+        queryset=question_bank.objects.all(),
+        widget=forms.Select(attrs={
+            "class": "form-control"
+        })
+    )

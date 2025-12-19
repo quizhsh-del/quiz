@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Select Option</title>
+
+
+    {% load widget_tweaks %}
+    <div class="max-w-md mx-auto mt-10 bg-blue-200 p-8 ">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+ 
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+<div class="bg-white p-6 rounded shadow w-80 text-gray-900">
+    <h2 class="text-xl font-bold mb-4 text-center">
+        Select an Option to Start Quiz
+    </h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label class="block mb-2">
+            <input type="radio" name="choice" value="A" required>
+            Option A
+        </label>
+
+        <label class="block mb-2">
+            <input type="radio" name="choice" value="B">
+            Option B
+        </label>
+
+        <label class="block mb-4">
+            <input type="radio" name="choice" value="C">
+            Option C
+        </label>
+
+        <button type="submit"
+            class="w-full bg-blue-600 text-white py-2 rounded">
+            Start Quiz
+        </button>
+    </form>
+</div>
+
+</body>
+</html>

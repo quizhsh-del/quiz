@@ -19,6 +19,10 @@ path('student/delete/<str:roll_no>/', views.student_delete, name='student_delete
 path('quiz/edit/<str:quiz_id>/', views.quiz_edit, name='quiz_edit'),
 path('quiz/delete/<str:quiz_id>/', views.quiz_delete, name='quiz_delete'),
 path('question/delete/<str:subject_id>/', views.pyqquestiondelete, name='pyq_question_delete'),
+path('results', views.faculty_result_view, name='faculty_result_see'),
+path('result/delete/<int:result_id>/', views.delete_result, name='delete_result'),
+path('courselist',views.cource_display,name='cource_list'),
+path('delete-course/<str:subject>/', views.delete_course, name='delete_course'),
 
  #action performed
  path('facultyaction',views.faculty_reg,name='faculty_reg'),

@@ -13,6 +13,10 @@ path('pyq',views.pyq,name='pyq'),
 path('shomepage',views.home,name='student_home'),
 path('emailotp',views.email_otp,name='email_otp'),
 path('emailpage',views.student_email_page,name='student_email_page'),
+path('result-history', views.result_history, name='result_history'),
+path('select-option', views.select_option, name='select_option'),
+
+
 
 #actioinperfomed
 path('studentaction',views.student_reg,name='student_reg'),

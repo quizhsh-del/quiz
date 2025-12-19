@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponse
-from Common.models import student_registration,quiz
-from Common.forms import student_registrationForm,quizForm
+from Common.models import student_registration,quiz, result,question_bank,questions
+from Common.forms import student_registrationForm,quizForm,PYQFilterForm
 from .util import send_email
 import random
 
@@ -15,9 +15,62 @@ def stregister(request):
     return render(request,"stregister.html",{'forms':regs})
 def passwordchange(request):
     return render(request,"passwordchange.html")
+    
 def quizattempt(request):
-    questions = quiz.objects.all()
-    return render(request, "quizattempt.html", {"questions": questions})
+    roll_no = request.session.get('roll_no')
+
+    if not roll_no:
+        return HttpResponse("Login required")
+
+    student = student_registration.objects.get(roll_no=roll_no)
+
+    difficulty = request.session.get('difficulty')
+
+    if not difficulty:
+        return redirect('select_option')
+
+    questions = quiz.objects.filter(Difficulty_Level=difficulty)
+
+    if request.method == "POST":
+        score = 0
+        correct = 0
+        wrong = 0
+
+        for q in questions:
+            selected = request.POST.get(q.question_id)
+            if selected == q.correct_option:
+                correct += 1
+                score += 1
+            elif selected:
+                wrong += 1
+
+        remarks = "PASS" if score >= questions.count() / 2 else "FAIL"
+
+        result.objects.create(
+            roll_no=student,
+            score=score,
+            correct_answer=correct,
+            wrong_answer=wrong,
+            remarks=remarks
+        )
+
+        # Clear difficulty after submit
+        del request.session['difficulty']
+
+        return render(request, "quizresult.html", {
+            "student": student,
+            "total": questions.count(),
+            "correct": correct,
+            "wrong": wrong,
+            "score": score,
+            "remarks": remarks
+        })
+
+    return render(request, "quizattempt.html", {
+        "questions": questions
+    })
+
+
        
 def pyq(request):
     return render(request,"pyq.html")    
@@ -84,6 +137,42 @@ def sloginaction(request):
 
 
 # Create your views here.
+
+
+
+
+def result_history(request):
+    roll_no = request.session.get('roll_no')
+
+    if not roll_no:
+        return HttpResponse("Login required")
+
+    student = student_registration.objects.get(roll_no=roll_no)
+
+    results = result.objects.filter(roll_no=student).order_by('-id')
+
+    return render(request, "result_history.html", {
+        "student": student,
+        "results": results
+    })
+
+def select_option(request):
+    if request.method == "POST":
+        choice = request.POST.get('choice')
+
+        # 🔒 Hidden mapping
+        difficulty_map = {
+            "A": "Easy",
+            "B": "Medium",
+            "C": "Hard"
+        }
+
+        request.session['difficulty'] = difficulty_map.get(choice)
+
+        return redirect('quiz_attempt')
+
+    return render(request, "select_option.html")
+    from .models import questions
 
 
 

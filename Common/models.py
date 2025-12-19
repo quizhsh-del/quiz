@@ -32,12 +32,12 @@ class student_registration(models.Model):
 
 #question_bank Table
 class question_bank(models.Model):
-    course_name = models.CharField(max_length=30,unique=True)
+    course_name = models.CharField(max_length=30)
     year = models.IntegerField()
     subject = models.CharField(max_length=30,primary_key=True) 
     
     def __str__(self):
-        return self.course_name
+        return self.subject
     
 
 

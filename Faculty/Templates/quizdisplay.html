@@ -95,15 +95,15 @@
             <tbody>
                 {% for q in quizdata %}
                 <tr class="hover:bg-gray-100">
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.quiz_id }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.question_id }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.question }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.option_A }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.option_B }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.option_C }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.option_D }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.correct_option }}</td>
-                    <td class="px-4 py-2 border border-gray-300 text-center">{{ q.Difficulty_Level }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.quiz_id }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.question_id }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.question }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.option_A }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.option_B }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.option_C }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.option_D }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.correct_option }}</td>
+                    <td class="px-4 py-2 border border-gray-300 text-center text-black">{{ q.Difficulty_Level }}</td>
                     <td class="px-4 py-2 border border-gray-300 text-center">
                         <a href="{% url 'quiz_edit' q.quiz_id %}"
                            class="text-blue-600 hover:underline mr-2">Edit</a>

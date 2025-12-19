@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
-from Common.models import faculty_registration,question_bank,questions,question_bank,quiz,questions,student_registration
-from Common.forms import faculty_RegistrationForm,quizquestionForm,quizForm,question_bankForm,questionsForm,student_registrationForm
+from Common.models import faculty_registration,question_bank,questions,question_bank,quiz,questions,student_registration,result
+from Common.forms import faculty_RegistrationForm,quizquestionForm,quizForm,questionsForm,student_registrationForm
 
 
 def login(request):
@@ -54,11 +54,11 @@ def quiz_in(request):
 def question_in(request):#view
   
     if request.method == "POST":
-      form = questionsForm(request.POST)
+      form = quizquestionForm(request.POST)
       if form.is_valid():
           form.save()
 
-    return HttpResponse("apploded")
+    return HttpResponse("apppploded")
  
 def student_edit(request, roll_no):
     student = get_object_or_404(student_registration, roll_no=roll_no)
@@ -163,3 +163,20 @@ def pyqquestiondelete(request, subject_id):
     q = get_object_or_404(questions, subject_id=subject_id)
     q.delete()
     return redirect('question_displays')
+def faculty_result_view(request):
+    results = result.objects.select_related('roll_no').all().order_by('-id')
+
+    return render(request, "faculty_result_view.html", {
+        "results": results
+    })
+def delete_result(request, result_id):
+    res = get_object_or_404(result, id=result_id)
+    res.delete()
+    return redirect('faculty_result_see')    
+def cource_display(request):
+     data=question_bank.objects.all()
+     return render(request,"cource_list.html",{'questiondata':data})
+def delete_course(request, subject):
+    course = get_object_or_404(question_bank, subject=subject)
+    course.delete()
+    return redirect('cource_list')      
