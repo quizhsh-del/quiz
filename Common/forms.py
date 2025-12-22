@@ -115,6 +115,11 @@ class quizForm(forms.ModelForm):
                 "placeholder": "Enter question id",
                 "class": "form-control",
             }),
+            'question': forms.TextInput(attrs={
+                "id": "questionText",   # 🔥 REQUIRED FOR JS
+                "placeholder": "Enter question",
+                "class": "form-control",
+            }),
             'option_A': forms.TextInput(attrs={
                 "placeholder": "Enter option",
                 "class": "form-control",

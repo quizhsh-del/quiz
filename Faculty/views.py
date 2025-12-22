@@ -1,8 +1,9 @@
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from Common.models import faculty_registration,question_bank,questions,question_bank,quiz,questions,student_registration,result
 from Common.forms import faculty_RegistrationForm,quizquestionForm,quizForm,questionsForm,student_registrationForm
-
-
+from .util import detect_intent, extract_topic, rebuild_mcq_stem
+import random
+from django.http import JsonResponse
 def login(request):
     reg = faculty_RegistrationForm()
     return render(request,'login.html', {'form':reg})
@@ -180,3 +181,23 @@ def delete_course(request, subject):
     course = get_object_or_404(question_bank, subject=subject)
     course.delete()
     return redirect('cource_list')      
+# nlp code
+def regenerate_question(request):
+     if request.method == "POST":
+        original_question = request.POST.get("question")
+
+        if not original_question:
+            return JsonResponse({"error": "No question provided"})
+
+        new_question = rebuild_mcq_stem(original_question)
+
+        return JsonResponse({
+            "new_question": new_question
+        })
+def quiz_regenerate_nlp(request):
+    if request.method == "POST":
+        question = request.POST.get("question")
+        if question:
+            new_q = rebuild_mcq_stem(question)
+            return JsonResponse({"new_question": new_q})
+        return JsonResponse({"error": "No question"}, status=400)

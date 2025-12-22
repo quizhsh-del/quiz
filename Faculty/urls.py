@@ -23,6 +23,10 @@ path('results', views.faculty_result_view, name='faculty_result_see'),
 path('result/delete/<int:result_id>/', views.delete_result, name='delete_result'),
 path('courselist',views.cource_display,name='cource_list'),
 path('delete-course/<str:subject>/', views.delete_course, name='delete_course'),
+# nlp
+path('quiz/regenerate/', views.regenerate_question, name='regenerate_question'),
+path("quiz/regenerate/", views.quiz_regenerate_nlp, name="quiz_regenerate_nlp"),
+
 
  #action performed
  path('facultyaction',views.faculty_reg,name='faculty_reg'),

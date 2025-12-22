@@ -58,11 +58,11 @@
             <tbody>
                 {% for s in studentdata %}
                 <tr>
-                    <td class="py-2 px-4 border-b">{{ s.department_name }}</td>
-                    <td class="py-2 px-4 border-b">{{ s.student_name }}</td>
-                    <td class="py-2 px-4 border-b">{{ s.roll_no }}</td>
-                    <td class="py-2 px-4 border-b">{{ s.year }}</td>
-                    <td class="py-2 px-4 border-b">{{ s.email_id }}</td>
+                    <td class="py-2 px-4 border-b text-black">{{ s.department_name }}</td>
+                    <td class="py-2 px-4 border-b text-black">{{ s.student_name }}</td>
+                    <td class="py-2 px-4 border-b text-black">{{ s.roll_no }}</td>
+                    <td class="py-2 px-4 border-b text-black">{{ s.year }}</td>
+                    <td class="py-2 px-4 border-b text-black">{{ s.email_id }}</td>
                     <td class="py-2 px-4 border-b">
                         <a href="{% url 'student_edit' s.roll_no %}" class="text-blue-500 hover:underline">Edit</a> |
                         <a href="{% url 'student_delete' s.roll_no %}" onclick="return confirm('Are you sure?');" class="text-red-500 hover:underline">Delete</a>

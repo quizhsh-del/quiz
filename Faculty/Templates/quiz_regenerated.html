@@ -1,0 +1,17 @@
+<h2 class="text-xl font-bold mb-3">NLP Regenerated Question</h2>
+
+<p class="text-gray-600 mb-4">
+    <b>Original:</b> {{ original_question }}
+</p>
+
+<form method="POST" action="{% url 'quiz_in' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit"
+        class="bg-green-600 text-white px-4 py-2 rounded">
+        Final Save Quiz
+    </button>
+</form>
+</div>
+

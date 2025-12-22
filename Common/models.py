@@ -14,6 +14,7 @@ class faculty_registration(models.Model):
     faculty_id = models.CharField(max_length=30,primary_key=True)
     password = models.CharField(max_length=30)
     department_name = models.CharField(max_length=30)
+    dptname = models.ForeignKey('department',on_delete=models.PROTECT,related_name="FACULTY",null=True,blank=True)
     faculty_name = models.CharField(max_length=30) 
     def __str__(self):
         return self.password
@@ -25,6 +26,7 @@ class student_registration(models.Model):
     password = models.CharField(max_length=30)
     student_name = models.CharField(max_length=50)
     department_name = models.CharField(max_length=30)
+    dptname = models.ForeignKey('department',on_delete=models.PROTECT,related_name="STUDENTS",null=True,blank=True)
     year = models.IntegerField()
     email_id = models.EmailField(max_length=30,unique=True)
     def __str__(self):
@@ -90,3 +92,7 @@ class quiz(models.Model):
 
 class department(models.Model):
     department_name = models.CharField(max_length=30,primary_key=True)
+    
+    def __str__(self):
+        return self.department_name
+    
