@@ -1,0 +1,86 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Question</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center"
+      style="background-color:#ECE9FF;">
+
+<div class="w-full max-w-xl bg-white rounded-2xl shadow-lg p-8 border border-[#DDD6FE]">
+
+    <!-- Title -->
+    <h2 class="text-2xl font-semibold text-center mb-8"
+        style="color:#6D5BD0;">
+        Edit Question
+    </h2>
+
+    <form method="POST" enctype="multipart/form-data" class="space-y-5">
+        {% csrf_token %}
+
+        <!-- Course -->
+        <div>
+            <label class="block text-sm mb-1 text-gray-600">Course</label>
+            {{ form.course_name|add_class:"w-full px-4 py-2 rounded-lg border border-[#DDD6FE] bg-[#F8F7FF] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
+        </div>
+
+        <!-- Subject -->
+        <div>
+            <label class="block text-sm mb-1 text-gray-600">Subject</label>
+            {{ form.subject|add_class:"w-full px-4 py-2 rounded-lg border border-[#DDD6FE] bg-[#F8F7FF] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
+        </div>
+
+        <!-- Year -->
+        <div>
+            <label class="block text-sm mb-1 text-gray-600">Year</label>
+            {{ form.year|add_class:"w-full px-4 py-2 rounded-lg border border-[#DDD6FE] bg-[#F8F7FF] focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
+        </div>
+
+        <!-- File -->
+        <div class="bg-[#F8F7FF] border border-[#DDD6FE] rounded-xl p-4">
+            <label class="block text-sm mb-2 text-gray-600">File</label>
+
+            {% if question.file %}
+                <p class="text-sm text-gray-500 mb-2">
+                    Current file:
+                    <a href="{{ question.file.url }}" target="_blank"
+                       class="text-[#6D5BD0] hover:underline font-medium">
+                        View
+                    </a>
+                </p>
+            {% endif %}
+
+            {{ form.file|add_class:"w-full text-sm text-gray-600" }}
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-center gap-4 pt-4">
+            <button type="submit"
+                class="px-8 py-2 rounded-lg text-white font-medium"
+                style="background-color:#7C6FEA;">
+                Update
+            </button>
+
+            <a href="{% url 'questionbank_list' %}"
+               class="px-8 py-2 rounded-lg font-medium text-gray-700"
+               style="background-color:#E5E7EB;">
+                Cancel
+            </a>
+            
+        </div>
+        <div class="text-center mt-6">
+    <a href="{% url 'faculty_home' %}"
+       class="text-sm font-medium text-[#6D5BD0] hover:underline">
+        ← Back to Faculty Home
+    </a>
+</div>
+
+    </form>
+   
+</div>
+
+</body>
+</html>

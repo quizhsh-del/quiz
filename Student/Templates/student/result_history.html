@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-violet-50 to-indigo-100 min-h-screen">
+
+<div class="max-w-4xl mx-auto mt-12 bg-white rounded-2xl shadow-lg overflow-hidden">
+
+    <!-- Header -->
+    <div class="bg-violet-600 text-white text-center py-6">
+        <h2 class="text-2xl font-bold">Result History</h2>
+        <p class="text-sm text-violet-200 mt-1">
+            View all your quiz attempts
+        </p>
+    </div>
+
+    <!-- Student Info -->
+    <div class="p-6 bg-violet-50 border-b">
+        <div class="grid grid-cols-2 gap-4 text-sm">
+            <p><span class="font-semibold">Name:</span> {{ student.student_name }}</p>
+            <p><span class="font-semibold">Roll No:</span> {{ student.roll_no }}</p>
+        </div>
+    </div>
+
+    <!-- Results Section -->
+    <div class="p-6">
+
+        {% if attempts %}
+        <div class="overflow-x-auto">
+            <table class="w-full border border-gray-200 rounded-lg overflow-hidden">
+                <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="p-3 border">#</th>
+                        <th class="p-3 border">Quiz</th>
+                        <th class="p-3 border">Score</th>
+                        <th class="p-3 border">Result</th>
+                        <th class="p-3 border">Attempted On</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in attempts %}
+                    <tr class="text-center hover:bg-gray-50 transition">
+                        <td class="p-3 border">{{ forloop.counter }}</td>
+                        <td class="p-3 border font-medium">
+                            {{ a.quiz.quiz_name }}
+                        </td>
+                        <td class="p-3 border font-semibold">
+                            {{ a.score }}
+                        </td>
+                        <td class="p-3 border font-bold
+                            {% if a.passed %}
+                                text-green-600
+                            {% else %}
+                                text-red-600
+                            {% endif %}
+                        ">
+                            {% if a.passed %}PASS{% else %}FAIL{% endif %}
+                        </td>
+                        <td class="p-3 border text-sm text-gray-600">
+                            {{ a.attempted_at|date:"d M Y, h:i A" }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-12">
+            <div class="text-violet-500 text-4xl mb-3">📄</div>
+            <p class="text-gray-600 text-lg font-medium">
+                No quiz attempts yet
+            </p>
+            <p class="text-sm text-gray-400 mt-1">
+                Attempt a quiz to see your results here
+            </p>
+        </div>
+        {% endif %}
+
+    </div>
+ <!-- Back to Home -->
+<div class="mt-8 text-center">
+    <a href="{% url 'student_home' %}"
+       class="inline-flex items-center gap-2 px-6 py-3
+              bg-violet-600 text-white rounded-xl font-medium
+              hover:bg-violet-700 transition shadow-md">
+
+        ← Back to Home
+    </a>
+</div>
+
+</div>
+
+</body>
+</html>

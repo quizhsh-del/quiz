@@ -1,166 +1,296 @@
-from django.shortcuts import render,redirect,HttpResponse
-from Common.models import student_registration,quiz, result,question_bank,questions
-from Common.forms import student_registrationForm,quizForm,PYQFilterForm
-from .util import send_email
+from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
+from Common.models import StudentRegistration,Quiz, Result,QuestionBank,QuizAnswer,QuizAttempt,QuizOption,QuizQuestion,Department
+from Common.forms import StudentRegistrationForm,StudentLoginForm,DepartmentForm,CourseForm,SubjectForm,QuestionBankForm,QuizAnswerForm,QuizAttemptForm,QuizOptionForm,QuizQuestionForm
 import random
 
+
+from .utils import detect_intent, extract_topic, rebuild_mcq_stem
+
+
+
 def stlogin(request):
-    reg=student_registrationForm()
-    return render(request,"stlogin.html",{'forms':reg})
-    
+    reg=StudentRegistrationForm()
+    return render(request,"shome.html",{'forms':reg})
 
 
-def stregister(request):
-    regs=student_registrationForm()
-    return render(request,"stregister.html",{'forms':regs})
-def passwordchange(request):
-    return render(request,"passwordchange.html")
-    
-def quizattempt(request):
-    roll_no = request.session.get('roll_no')
+def student_reg(request):
+    if request.method == "POST":
+        form = StudentRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            print("Saved successfully")
+            return redirect('student_register')
+        else:
+            print(form.errors)  
+    else:
+        form = StudentRegistrationForm()
 
-    if not roll_no:
-        return HttpResponse("Login required")
+    return render(request, 'student/stlogin.html', {'form': form})
 
-    student = student_registration.objects.get(roll_no=roll_no)
-
-    difficulty = request.session.get('difficulty')
-
-    if not difficulty:
-        return redirect('select_option')
-
-    questions = quiz.objects.filter(Difficulty_Level=difficulty)
+def sloginaction(request):
+    error = None
+    form = StudentLoginForm()
 
     if request.method == "POST":
-        score = 0
-        correct = 0
-        wrong = 0
+        form = StudentLoginForm(request.POST)
+        roll_no = request.POST.get('roll_no')
+        password = request.POST.get('password')
+        print(roll_no,password)
 
-        for q in questions:
-            selected = request.POST.get(q.question_id)
-            if selected == q.correct_option:
-                correct += 1
-                score += 1
-            elif selected:
-                wrong += 1
+        try:
+            student = StudentRegistration.objects.get(
+                roll_no=roll_no,
+                password=password
+            )
+            print(student)
 
-        remarks = "PASS" if score >= questions.count() / 2 else "FAIL"
+            request.session['roll_no'] = roll_no
+            print("redirected")
+            return redirect('student_home')
+            
 
-        result.objects.create(
-            roll_no=student,
-            score=score,
-            correct_answer=correct,
-            wrong_answer=wrong,
-            remarks=remarks
-        )
+        except StudentRegistration.DoesNotExist:
+            error = "Invalid Roll Number or Password"
 
-        # Clear difficulty after submit
-        del request.session['difficulty']
-
-        return render(request, "quizresult.html", {
-            "student": student,
-            "total": questions.count(),
-            "correct": correct,
-            "wrong": wrong,
-            "score": score,
-            "remarks": remarks
-        })
-
-    return render(request, "quizattempt.html", {
-        "questions": questions
+    return render(request, 'student/stlogin.html', {
+        'forms': form,
+        'error': error
     })
 
 
-       
-def pyq(request):
-    return render(request,"pyq.html")    
 
-def home(request):
-    return render(request,"shome.html")    
+# def stregister(request):
+#     regs=StudentRegistrationForm()
+#     return render(request,"student/stregister.html",{'forms':regs})
+
+
+def student_home(request):
+    if 'student_roll' not in request.session:
+        return redirect('student_login')
+
+    student = StudentRegistration.objects.get(
+        roll_no=request.session['student_roll']
+    )
+
+    return render(request, 'shome.html', {
+        'student': student
+    })
+
+
+def student_logout(request):
+    request.session.flush()   
+    return redirect('commonhome')
+
+
+def student_pyq_questions(request):
+    pyqs = QuestionBank.objects.select_related(
+        'course_name',
+        'course_name__department',
+        'subject',
+        'subject__department'
+    ).order_by(
+        '-year',
+        'course_name__department__department_name',
+        'course_name__course_name',
+        'subject__subject_name'
+    )
+
+    return render(request, 'student/pyq_questions.html', {
+        'pyqs': pyqs
+    })
+
+
+def passwordchange(request):
+    return render(request,"passwordchange.html")
+    
+
+def student_quiz_list(request):
+    quizzes = Quiz.objects.all()
+    return render(request, 'student/quiz_list.html', {'quizzes': quizzes})
+
+
+import random
+from django.shortcuts import get_object_or_404, render, redirect
+from .utils import rebuild_mcq_stem
+
+
+
+def result_history(request):
+    roll_no = request.session.get('roll_no')
+    student = StudentRegistration.objects.get(roll_no=roll_no)
+
+    attempts = QuizAttempt.objects.filter(
+        student=student,
+        is_mock=True
+    ).order_by('-attempted_at')
+
+    return render(request, 'student/result_history.html', {
+        'attempts': attempts,
+        'student': student
+    })
+
+
+from django.db import IntegrityError
+
+import random
+from django.shortcuts import render, redirect, get_object_or_404
+from .utils import rebuild_mcq_stem
+from Common.models import Quiz, QuizAttempt, QuizAnswer, QuizOption
+
+
+def student_quiz_attempt(request, quiz_id):
+
+    quiz = get_object_or_404(Quiz, id=quiz_id)
+
+    roll_no = request.session.get("roll_no")
+    if not roll_no:
+        return redirect("student_login")
+
+    student = get_object_or_404(StudentRegistration, roll_no=roll_no)
+
+    is_mock = request.GET.get("mock") == "1"
+
+    session_key = f"mock_attempt_{quiz_id}"
+    mock_count = request.session.get(session_key, 0)
+
+    questions = list(
+        quiz.questions.prefetch_related("options")
+    )
+
+    regenerated_questions = []
+
+    if is_mock and mock_count > 0:
+        random.shuffle(questions)
+
+        for q in questions:
+            regenerated_questions.append({
+                "id": q.id,
+                "text": rebuild_mcq_stem(q.question_text),
+                "options": q.options.all()
+            })
+    else:
+        for q in questions:
+            regenerated_questions.append({
+                "id": q.id,
+                "text": q.question_text,
+                "options": q.options.all()
+            })
+
+    if request.method == "POST":
+
+        if is_mock:
+            QuizAttempt.objects.filter(
+                quiz=quiz,
+                student=student,
+                is_mock=True
+            ).delete()
+
+        attempt = QuizAttempt.objects.create(
+            quiz=quiz,
+            student=student,
+            is_mock=is_mock
+        )
+
+        score = correct = wrong = 0
+
+        for q in questions:
+            selected_option_id = request.POST.get(str(q.id))
+            if not selected_option_id:
+                continue
+
+            opt = get_object_or_404(QuizOption, id=selected_option_id)
+
+            QuizAnswer.objects.create(
+                attempt=attempt,
+                question=q,
+                selected_option=opt
+            )
+
+            if opt.is_correct:
+                score += 1
+                correct += 1
+            else:
+                wrong += 1
+
+        attempt.score = score
+        attempt.correct_count = correct
+        attempt.wrong_count = wrong
+        attempt.passed = score >= quiz.pass_mark
+        attempt.save()
+
+        if is_mock:
+            request.session[session_key] = mock_count + 1
+
+        return redirect("student_quiz_result", attempt_id=attempt.id)
+
+    return render(request, "student/attempt_quiz.html", {
+        "quiz": quiz,
+        "questions": regenerated_questions,
+        "is_mock": is_mock,
+        "mock_count": mock_count
+    })
+
 
 
 def email_otp(request):
     return render(request,'email_otp.html')
 
+def student_quiz_result(request, attempt_id):
+    attempt = QuizAttempt.objects.get(id=attempt_id)
+    quiz = attempt.quiz   
+
+    questions = quiz.questions.prefetch_related('options')
+
+    return render(request, 'student/quiz_result.html', {
+        'attempt': attempt,
+        'quiz': quiz,        
+        'questions': questions
+    })
+
+
+
 def student_email_page(request):
     if request.method == "POST":
-        form = student_registrationForm(request.POST)
+        form = StudentRegistrationForm(request.POST)
         email = request.POST.get('email_id')
         print(email)
         
         try:
-            student=student_registration.objects.get(email_id = email)
+            student=StudentRegistration.objects.get(email_id = email)
             request.session['email_id'] = student.email_id
             subject="quiz app password reset"
             otp=random.randint(1000,9999)
             body=f"otp for your password reset = {otp}"
             sent = send_email(email,subject,body)
             return HttpResponse("otp sended")
-        except student_registration.DoesNotExist:
+        except StudentRegistration.DoesNotExist:
             return HttpResponse("no student in this email id")
 
 
 
-
-
-# password reset
-
-
-      
-
-
-
-def student_reg(request):
-    if request.POST:
-
-      form = student_registrationForm(request.POST)
-      if form.is_valid():
-        form.save()
-        return HttpResponse("registerd")
-    return HttpResponse("invalid")
-def sloginaction(request):
-    
-    if request.method == "POST":
-       roll_no= request.POST.get('roll_no')
-       password=request.POST.get('password')
-
-   
-      
-    try:
-                student = student_registration.objects.get(roll_no=roll_no,password=password)
-                request.session['roll_no']=student.roll_no
-                request.session['password']=student.password
-                return redirect('student_home')
-    except student_registration.DoesNotExist:
-                
-      return HttpResponse("invalid login")     
-
-
 # Create your views here.
-
-
-
-
 def result_history(request):
     roll_no = request.session.get('roll_no')
 
     if not roll_no:
-        return HttpResponse("Login required")
+        return redirect('student_login')
 
-    student = student_registration.objects.get(roll_no=roll_no)
+    student = StudentRegistration.objects.get(roll_no=roll_no)
 
-    results = result.objects.filter(roll_no=student).order_by('-id')
+    attempts = QuizAttempt.objects.filter(
+        student=student
+    ).order_by('-attempted_at')
 
-    return render(request, "result_history.html", {
-        "student": student,
-        "results": results
+    return render(request, 'student/result_history.html', {
+        'student': student,
+        'attempts': attempts
     })
+
 
 def select_option(request):
     if request.method == "POST":
         choice = request.POST.get('choice')
 
-        # 🔒 Hidden mapping
         difficulty_map = {
             "A": "Easy",
             "B": "Medium",

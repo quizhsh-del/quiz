@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty - Student Results</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+    <!-- Faculty Header -->
+    {% include 'fheader.html' %}
+
+    <!-- Main Container -->
+    <div class="max-w-7xl mx-auto mt-10 bg-white shadow-md rounded-xl p-8">
+
+        <h2 class="text-2xl font-semibold text-center text-slate-800 mb-1">
+            Student Results
+        </h2>
+
+        <p class="text-center text-slate-500 mb-6">
+            Department :
+            <span class="font-medium text-slate-700">
+                {{ department }}
+            </span>
+        </p>
+
+        <!-- Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full border border-slate-200 rounded-lg overflow-hidden">
+
+                <!-- Table Header -->
+                <thead class="bg-indigo-100 text-slate-700">
+                    <tr>
+                        <th class="px-4 py-3 border">Roll No</th>
+                        <th class="px-4 py-3 border">Student Name</th>
+                        <th class="px-4 py-3 border">Quiz</th>
+                        <th class="px-4 py-3 border">Score</th>
+                        <th class="px-4 py-3 border">Correct</th>
+                        <th class="px-4 py-3 border">Wrong</th>
+                        <th class="px-4 py-3 border">Attempt Type</th>
+                        <th class="px-4 py-3 border">Result</th>
+                    </tr>
+                </thead>
+
+                <!-- Table Body -->
+                <tbody class="text-center text-slate-700">
+                    {% if results %}
+                        {% for r in results %}
+                        <tr class="hover:bg-indigo-50 transition">
+                            <td class="px-4 py-2 border">
+                                {{ r.student.roll_no }}
+                            </td>
+                            <td class="px-4 py-2 border">
+                                {{ r.student.student_name }}
+                            </td>
+                            <td class="px-4 py-2 border">
+                                {{ r.quiz.quiz_name }}
+                            </td>
+                            <td class="px-4 py-2 border font-semibold">
+                                {{ r.score }}
+                            </td>
+                            <td class="px-4 py-2 border text-emerald-600">
+                                {{ r.correct_count }}
+                            </td>
+                            <td class="px-4 py-2 border text-rose-500">
+                                {{ r.wrong_count }}
+                            </td>
+                            <td class="px-4 py-2 border">
+                                {% if r.is_mock %}
+                                    <span class="text-orange-600 font-medium">
+                                        Mock
+                                    </span>
+                                {% else %}
+                                    <span class="text-indigo-600 font-medium">
+                                        Real
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="px-4 py-2 border">
+                                {% if r.passed %}
+                                    <span class="text-green-600 font-semibold">
+                                        Passed
+                                    </span>
+                                {% else %}
+                                    <span class="text-red-600 font-semibold">
+                                        Failed
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8"
+                                class="px-4 py-6 border text-rose-400 font-medium">
+                                No quiz results available for this department
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="text-center text-slate-400 mt-12 text-sm">
+        © {{ year|default:"2026" }} Faculty Portal
+    </footer>
+
+</body>
+</html>

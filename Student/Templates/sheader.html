@@ -1,48 +1,62 @@
-{% comment %} <div>
-    <ul>
-        <li><a href="{% url 'quiz_attempt'%}">Quiz Attempt</a></li>
-        <li><a href="{% url 'pyq' %}">PYQ Questions</a></li>
-        <li>Profile</li>
-    </ul>   
-</div>     {% endcomment %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz And PYQ  System </title>
-
-    <!-- Tailwind CDN -->
+    <meta charset="UTF-8">
+    <title>Quiz And PYQ System</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 
-<body class="bg-black-50 text-white">
+<body class="bg-[#EDE9FE] text-gray-700">
 
-    <!-- ====================== HEADER ====================== -->
-    <header class="bg-black shadow-sm">
-        <nav class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
-            
-            <img src="{% static 'images/download.jpg.webp' %}" alt="Logo" class="h-25 w-20 mr-3" />
-            <h1 class="text-2xl font-bold text-white-600">
-                Quiz And PYQ Management System
+<!-- ================= HEADER ================= -->
+<header class="bg-white shadow-md">
+    <nav class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+
+        <!-- Logo + Title -->
+        <div class="flex items-center gap-3">
+            <img src="{% static 'images/download.jpg.webp' %}"
+                 alt="Logo"
+                 class="h-12 w-12 rounded-xl shadow-sm" />
+
+            <h1 class="text-xl font-bold text-violet-700">
+                Quiz & PYQ Management System
             </h1>
+        </div>
 
-            <div class="space-x-4">
-                 <a href="{% url 'quiz_attempt' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700 ">
-                Quiz Attempt
-                </a>
-                <a href="{% url 'pyq' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
+        <!-- Navigation -->
+        <div class="flex gap-3">
+
+           <a href="{% url 'quiz_attempt' %}"
+   class="bg-purple-500 text-white px-5 py-2 rounded-lg font-semibold">
+   Quiz Attempt
+</a>
+
+
+
+            <a href="{% url 'student_pyq' %}"
+               class="px-4 py-2 text-sm rounded-xl
+                      bg-[#C4B5FD] text-violet-800
+                      hover:bg-[#A78BFA] hover:text-white
+                      transition shadow">
                 PYQ Questions
-                </a>
-                <a href="{% url 'commonhome' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
-                home
-                </a>
-            </div>
-        </nav>
-    </header>
+            </a>
+
+            <a href="{% url 'commonhome' %}"
+               class="px-4 py-2 text-sm rounded-xl
+                      bg-gray-100 text-gray-700
+                      hover:bg-gray-200 transition shadow">
+                Logout
+            </a>
+
+             <a href="{% url 'student_home' %}"
+               class="px-4 py-2 text-sm rounded-xl
+                      bg-gray-100 text-gray-700
+                      hover:bg-gray-200 transition shadow">
+                Home
+            </a>
+
+          
+        </div>
+    </nav>
+</header>

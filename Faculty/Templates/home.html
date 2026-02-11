@@ -1,100 +1,124 @@
-
+{% load static %}
 {% include 'fheader.html' %}
 
-{% load static %}
-{% load widget_tweaks %}
- 
-
-
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz And PYQ  System </title>
+    <title>Quiz & PYQ System</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 
 <body class="bg-violet-300 text-violet-800">
 
-  
-    <section class="max-w-7xl mx-auto px-6 py-20 text-center rounded-xl bg-cover bg-center bg-no-repeat"
-        style="background-image: url('{% static 'images/faculty.png' %}');">
-        <div class="backdrop-brightness-50 py-20 px-5 rounded-xl">
-            <h2 class="text-4xl font-bold text-white mb-4 drop-shadow">
+    <!-- ====================== HERO SECTION ====================== -->
+    <section
+        class="max-w-7xl mx-auto mt-10 px-6 py-24 text-center rounded-2xl
+               bg-cover bg-center bg-no-repeat shadow-lg"
+        style="background-image: url('{% static 'images/faculty.png' %}');"
+    >
+        <div class="bg-black/50 py-16 px-6 rounded-xl">
+            <h2 class="text-4xl font-bold text-white mb-4">
                 Welcome to the Quiz and PYQ Management System
             </h2>
-            <p class="text-lg text-gray-200 max-w-2xl mx-auto drop-shadow">
-                Your one-stop solution for managing quizzes and previous year questions efficiently and effectively.
+            <p class="text-lg text-gray-200 max-w-2xl mx-auto">
+                Your one-stop solution for managing quizzes and previous year questions
+                efficiently and effectively.
+            </p>
+        </div>
+    </section>
 
-            </p>
+    <!-- ====================== DASHBOARD SECTION ====================== -->
+    <section class="max-w-7xl mx-auto mt-16 px-6 py-20">
+
+        <h2 class="text-3xl font-bold text-center text-violet-900 mb-12">
+            Faculty Dashboard
+        </h2>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+
+            <!-- Student List -->
+            <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-xl transition">
+                <p class="text-gray-600 mb-6">
+                    View and manage registered students
+                </p>
+                <a href="{% url 'student_list' %}"
+                   class="px-6 py-2 rounded-lg bg-[#A78BFA] text-white
+                          hover:bg-[#8B5CF6] transition shadow">
+                    Student List
+                </a>
+            </div>
+
+
+            <!-- Question List -->
+            <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-xl transition">
+                <p class="text-gray-600 mb-6">
+                    Access uploaded questions
+                </p>
+                <a href="{% url 'questionbank_list' %}"
+                   class="px-6 py-2 rounded-lg bg-[#A78BFA] text-white
+                          hover:bg-[#8B5CF6] transition shadow">
+                    Question List
+                </a>
+            </div>
+
+            <!-- Student Results -->
+            <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-xl transition">
+                <p class="text-gray-600 mb-6">
+                    View student performance and results
+                </p>
+                <a href="{% url 'faculty_result_see' %}"
+                   class="px-6 py-2 rounded-lg bg-[#A78BFA] text-white
+                          hover:bg-[#8B5CF6] transition shadow">
+                    Student Results
+                </a>
+            </div>
+
+            <!-- Course List -->
+            <!-- <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-xl transition">
+                <p class="text-gray-600 mb-6">
+                    View available courses
+                </p>
+                <a href="{% url 'cource_list' %}"
+                   class="px-6 py-2 rounded-lg bg-[#A78BFA] text-white
+                          hover:bg-[#8B5CF6] transition shadow">
+                    Course List
+                </a>
+            </div> -->
+
+            <!--  Subject List  -->
+            <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-xl transition">
+                <p class="text-gray-600 mb-6">
+                    View available subjects
+                </p>
+                <a href="{% url 'subject_list' %}"
+                   class="px-6 py-2 rounded-lg bg-[#A78BFA] text-white
+                          hover:bg-[#8B5CF6] transition shadow">
+                    Subject List
+                </a>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-md p-8 text-center hover:shadow-xl transition">
+                <p class="text-gray-600 mb-6">
+                    View available Quizzes
+                </p>
+                <a href="{% url 'cource_list' %}"
+                   class="px-6 py-2 rounded-lg bg-[#A78BFA] text-white
+                          hover:bg-[#8B5CF6] transition shadow">
+                     Course → Quiz List
+                </a>
+            </div>
+
         </div>
     </section>
-   
- <!-- ====================== MODULES SECTION ====================== -->
-    <section class="max-w-md mx-auto mt-10 bg-gray p-8 rounded-md shadow-xl/30 border shadow-black-700  ">
-      <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
-            <h3 class="text-xl font-semibold mb-3 text-green-600  "></h3>
-            <p class="text-gray-600 text-sm mb-4">
-                Faculty can get student list
-                
-            </p>
-            <a href="{% url 'student_list' %}" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-green-700">
-                student List
-            </a>
-        </div>
-        <!--  quiz_display --> 
-    <div class="mt-8">
-        <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
-            <h3 class="text-xl font-semibold mb-3 text-green-600  "></h3>
-            <p class="text-gray-600 text-sm mb-4">
-                Faculty can get quiz list
-                
-            </p>
-            <a href="{% url 'quiz_display' %}" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-green-700">
-                quiz List
-            </a>
-        </div>
-        <!-- question_display -->
-    <div class="mt-8">
-        <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
-            <h3 class="text-xl font-semibold mb-3 text-green-600  "></h3>
-            <p class="text-gray-600 text-sm mb-4">
-                Faculty can get question list
-                
-            </p>
-            <a href="{% url 'question_displays' %}" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-green-700">
-                question List
-            </a>
-        </div>
-    <div class="mt-8">
-        <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
-            <h3 class="text-xl font-semibold mb-3 text-green-600  "></h3>
-            <p class="text-gray-600 text-sm mb-4">
-                Faculty can get student Result list
-                
-            </p>
-            <a href="{% url 'faculty_result_see' %}" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-green-700">
-                student Result List
-            </a>
-        </div>
-      <div class="mt-8">
-        <div class="bg-white rounded-xl shadow p-6 text-center hover:shadow-lg transition ">
-            <h3 class="text-xl font-semibold mb-3 text-green-600  "></h3>
-            <p class="text-gray-600 text-sm mb-4">
-                Faculty can get student Result list
-                
-            </p>
-            <a href="{% url 'cource_list' %}" class="mt-2 px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-green-700">
-                Cource List
-            </a>
-        </div> 
-    </section>
-    <footer class="bg-white mt-16 py-4 border-t">
+
+    <!-- ====================== FOOTER ====================== -->
+    <footer class="bg-white mt-20 py-4 border-t">
         <div class="max-w-7xl mx-auto px-6 text-center text-sm text-gray-500">
-            © 2025 faculty / qandp — All Rights Reserved.
+            © 2025 Faculty | Quiz & PYQ System — All Rights Reserved
         </div>
     </footer>
 

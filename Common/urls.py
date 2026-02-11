@@ -7,5 +7,7 @@ urlpatterns = [
  path('feedback',views.feedback,name='feedback'),
  path('feedback_action',views.feedback_action,name='faction'),
  path('header_c',views.header_c,name='header_c'),
- path('commonhome',views.commonhome,name='commonhome'),
+ path('',views.commonhome,name='commonhome'),
+
+ 
 ]

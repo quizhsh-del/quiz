@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz & PYQ Management System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-[#F5F3FF] via-[#FDF4FF] to-[#ECFEFF]">
+<!-- ================= NAVBAR ================= -->
+<header class="sticky top-0 z-50 backdrop-blur-lg bg-white/70 border-b border-violet-100 shadow-sm">
+    <nav class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+
+        <!-- Logo + Title -->
+        <div class="flex items-center gap-3">
+            <img src="{% static 'images/download.jpg.webp' %}"
+                 class="h-10 w-10 rounded-xl shadow-md" alt="Logo">
+
+            <span class="text-lg font-bold text-[#4C1D95]">
+                Quiz & PYQ System
+            </span>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex items-center gap-6 text-sm font-medium">
+            <a href="{% url 'faculty_reg' %}"
+               class="text-gray-600 hover:text-[#7C3AED] transition">
+                Faculty Register
+            </a>
+
+            <a href="{% url 'teachers_list' %}"
+               class="text-gray-600 hover:text-[#7C3AED] transition">
+                Faculty List
+            </a>
+
+            <a href="{% url 'department_list' %}"
+               class="text-gray-600 hover:text-[#7C3AED] transition">
+                Manage Departments
+            </a>
+
+            <!-- Active Link -->
+            <a href="{% url 'admin_home' %}"
+               class="px-4 py-1.5 rounded-full bg-[#EDE9FE] text-[#5B21B6] font-semibold shadow-sm">
+                Home
+            </a>
+
+            
+           <a href="{% url 'admin_logout' %}"
+               class="px-4 py-1.5 rounded-full bg-[#EDE9FE] text-[#5B21B6] font-semibold shadow-sm">
+                Logout
+            </a>
+        </div>
+
+    </nav>
+</header>
+
+
+<!-- ================= HERO SECTION ================= -->
+<section class="max-w-7xl mx-auto px-6 py-16">
+
+    <div class="relative rounded-3xl overflow-hidden shadow-2xl">
+        <!-- Background Image -->
+        <img src="{% static 'images/library.jpg' %}"
+             class="w-full h-[420px] object-cover">
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <div class="bg-white/20 backdrop-blur-lg rounded-2xl px-10 py-12 text-center max-w-3xl">
+
+                <h1 class="text-4xl font-bold text-white mb-4">
+                    Welcome to the Quiz & PYQ Management System
+                </h1>
+
+                <p class="text-lg text-gray-100">
+                    Your one-stop solution for managing quizzes,  
+                    previous year questions, and academic performance  
+                    efficiently and effectively.
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+<footer class="bg-white/80 backdrop-blur-sm border-t mt-10">
+    <div class="max-w-7xl mx-auto px-6 py-4 text-center text-sm text-gray-500">
+        © 2026 Quiz & PYQ Management System — All Rights Reserved
+    </div>
+</footer>
+
+</body>
+</html>

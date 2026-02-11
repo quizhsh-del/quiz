@@ -1,6 +1,39 @@
-<h2> admin register page </h2>
-<form method ="post" action={% url "admin_reg" %}>
-    {% csrf_token %}
-    {{ forms.as_p }}
-    <button type = "submit">register</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#F5F3FF] min-h-screen flex items-center justify-center">
+
+    <!-- Card -->
+    <div class="bg-white shadow-xl rounded-xl w-full max-w-md p-8 border border-[#EDE9FE]">
+        
+        <!-- Heading -->
+        <h2 class="text-2xl font-bold text-center text-[#4C1D95] mb-6">
+            Admin Register Page
+        </h2>
+
+        <!-- Form -->
+        <form method="post" action="{% url 'admin_reg' %}" class="space-y-5">
+            {% csrf_token %}
+
+            <!-- Django Form Fields -->
+            <div class="space-y-4">
+                {{ forms.as_p }}
+            </div>
+
+            <!-- Submit Button -->
+            <button 
+                type="submit"
+                class="w-full bg-[#A78BFA] text-white py-2 rounded-lg font-semibold
+                       hover:bg-[#8B5CF6] transition duration-300 shadow-md">
+                Register
+            </button>
+        </form>
+
+    </div>
+
+</body>
+</html>

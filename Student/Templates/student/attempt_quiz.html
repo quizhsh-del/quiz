@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ quiz.quiz_name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+{% include 'sheader.html' %}
+
+<div class="max-w-4xl mx-auto mt-10 mb-16 bg-white p-8 rounded-xl shadow">
+
+    <!-- Quiz Title -->
+    <h2 class="text-2xl font-bold text-indigo-600 mb-2">
+        {{ quiz.quiz_name }}
+    </h2>
+
+    <!-- Mock / Real Badge -->
+    {% if is_mock %}
+        <p class="text-sm text-orange-600 mb-4">
+            🧪 Mock Quiz – Questions are regenerated automatically
+        </p>
+    {% else %}
+        <p class="text-sm text-green-600 mb-4">
+            🎯 Real Quiz – Only one attempt allowed
+        </p>
+    {% endif %}
+
+    <!-- Quiz Form -->
+    <form method="post">
+        {% csrf_token %}
+
+        {% for question in questions %}
+        <div class="mb-6 border-b pb-4">
+
+            <!-- Question -->
+            <p class="font-semibold text-slate-800 mb-2">
+                {{ forloop.counter }}. {{ question.text }}
+            </p>
+
+            <!-- Options -->
+            {% for option in question.options.all %}
+            <label class="block ml-4 mb-2 cursor-pointer">
+                <input type="radio"
+                       name="{{ question.id }}"
+                       value="{{ option.id }}"
+                       required
+                       class="mr-2">
+                {{ option.option_text }}
+            </label>
+            {% endfor %}
+
+        </div>
+        {% endfor %}
+
+        <!-- Submit Button -->
+        <div class="flex justify-between items-center mt-6">
+            <a href="{% url 'quiz_attempt' %}"
+               class="text-indigo-500 hover:underline">
+                ← Back to Quiz List
+            </a>
+
+            <button type="submit"
+                    class="bg-indigo-500 hover:bg-indigo-600
+                           text-white px-6 py-2 rounded-lg shadow">
+                Submit Quiz
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

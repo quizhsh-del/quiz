@@ -1,0 +1,75 @@
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-[#F5F3FF] via-[#FDF4FF] to-[#ECFEFF]">
+
+    <!-- Page Wrapper -->
+    <div class="min-h-[calc(100vh-64px)] flex items-center justify-center px-4">
+
+        <!-- Registration Card -->
+        <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#EDE9FE] p-10">
+
+            <!-- Title -->
+            <h2 class="text-3xl font-bold text-center text-[#4C1D95] mb-8">
+                Faculty Registration
+            </h2>
+
+            <!-- Form -->
+            <form method="POST" action="{% url 'faculty_reg' %}" class="space-y-5">
+                {% csrf_token %}
+
+                <!-- Faculty ID -->
+                <div>
+                    {{ form.faculty_id.label_tag }}
+                    {{ form.faculty_id|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
+                </div>
+
+                <!-- Faculty Name -->
+                <div>
+                    {{ form.faculty_name.label_tag }}
+                    {{ form.faculty_name|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
+                </div>
+
+                <!-- Department -->
+                <div>
+                    {{ form.department.label_tag }}
+                    {{ form.department|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
+                </div>
+
+                <!-- Password -->
+                <div>
+                    {{ form.password.label_tag }}
+                    {{ form.password|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
+                </div>
+
+                
+
+                <!-- Submit Button -->
+                <button
+                    type="submit"
+                    class="w-full mt-6 bg-[#A78BFA] text-white py-3 rounded-xl font-semibold
+                           hover:bg-[#8B5CF6] transition duration-300 shadow-lg">
+                    Register
+                </button>
+
+                <p class="text-center text-sm text-gray-500 mt-4">
+                    Already registered?
+                    <a href="{% url 'login' %}"
+                    class="text-[#7C3AED] font-semibold hover:underline">
+                    Login here
+                    </a>
+                </p>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>

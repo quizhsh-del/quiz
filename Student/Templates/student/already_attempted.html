@@ -1,0 +1,21 @@
+{% extends 'student/base.html' %}
+{% block content %}
+
+<div class="max-w-xl mx-auto py-20">
+    <div class="bg-white shadow-xl rounded-xl p-8 text-center">
+        <h2 class="text-2xl font-bold text-red-600 mb-4">
+            Quiz Already Attempted
+        </h2>
+
+        <p class="mb-6">
+            You have already attempted <strong>{{ quiz.quiz_name }}</strong>.
+        </p>
+
+        <a href="{% url 'student_home' %}"
+           class="bg-indigo-500 text-white px-6 py-2 rounded-lg">
+            Back to Home
+        </a>
+    </div>
+</div>
+
+{% endblock %}

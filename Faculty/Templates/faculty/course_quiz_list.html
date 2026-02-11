@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quizzes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#F5F3FF] min-h-screen p-10">
+
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow">
+
+    <!-- Title -->
+    <h2 class="text-2xl font-bold text-center text-[#6D5BD0] mb-6">
+        Quizzes for {{ course.course_name }}
+    </h2>
+
+    {% if quizzes %}
+        <table class="w-full border text-center">
+            <thead class="bg-gray-100">
+                <tr>
+                    <th class="border p-2">#</th>
+                    <th class="border p-2">Quiz Name</th>
+                    <th class="border p-2">Pass Mark</th>
+                    <th class="border p-2">Action</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for quiz in quizzes %}
+                <tr class="hover:bg-violet-50 transition">
+                    <td class="border p-2">{{ forloop.counter }}</td>
+                    <td class="border p-2">{{ quiz.quiz_name }}</td>
+                    <td class="border p-2">{{ quiz.pass_mark }}</td>
+
+                    <td class="border p-2">
+                        <a href="{% url 'faculty_quiz_detail' quiz.id %}"
+                           class="text-violet-600 font-semibold hover:underline">
+                            View Questions
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center text-gray-500">
+            No quizzes available for this course.
+        </p>
+    {% endif %}
+
+    <!-- Back button -->
+    <div class="text-center mt-6">
+        <a href="{% url 'cource_list' %}"
+           class="px-6 py-2 bg-gray-300 rounded-lg hover:bg-gray-400">
+            ⬅ Back to Courses
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>

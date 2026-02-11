@@ -1,0 +1,65 @@
+{% load widget_tweaks %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-[#F5F3FF]">
+
+<div class="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-[#EDE9FE]">
+
+    <h2 class="text-2xl font-semibold text-center text-[#6D5BD0] mb-6">
+        Student Login
+    </h2>
+
+    {% if error %}
+        <div class="mb-4 px-4 py-2 rounded-lg text-sm text-red-700 bg-red-50 border border-red-200">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'student_login' %}" class="space-y-4">
+        {% csrf_token %}
+
+        <!-- Roll Number -->
+        <div>
+            <label class="block text-sm font-medium mb-1">Roll Number</label>
+            <input type="text" name="roll_no" required
+                class="w-full px-4 py-2 rounded-xl border border-[#DDD6FE] bg-[#FAF9FF] focus:ring-2 focus:ring-[#C4B5FD]">
+        </div>
+
+        <!-- Password -->
+        <div>
+            <label class="block text-sm font-medium mb-1">Password</label>
+            <input type="password" name="password" required
+                class="w-full px-4 py-2 rounded-xl border border-[#DDD6FE] bg-[#FAF9FF] focus:ring-2 focus:ring-[#C4B5FD]">
+        </div>
+
+        <button type="submit"
+            class="w-full mt-4 py-2 rounded-xl bg-[#A78BFA] text-white font-medium hover:bg-[#8B5CF6] transition">
+            Login
+        </button>
+
+            <p class="text-center text-sm text-[#6D5BD0] mt-4">
+                Don't have an account?
+                <a href="{% url 'student_register' %}"
+                class="text-[#A78BFA] font-medium hover:underline">
+                    Register here
+                </a>
+
+             <p class="text-center text-sm text-[#6D5BD0] mt-4">
+                <a href="{% url 'student_home' %}"
+                class="text-[#A78BFA] font-medium hover:underline">
+                    Back to Home
+                </a>
+            </p>
+            
+    </form>
+
+</div>
+
+</body>
+</html>

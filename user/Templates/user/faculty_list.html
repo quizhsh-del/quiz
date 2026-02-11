@@ -1,0 +1,72 @@
+{% include 'uheader.html' %}
+
+<div class="min-h-screen bg-violet-50 py-10">
+
+<div class="max-w-6xl mx-auto bg-violet-100 p-6 rounded-2xl shadow-lg">
+
+    <h2 class="text-2xl font-bold text-center mb-6 text-violet-900">
+        Faculty List
+    </h2>
+
+    <!-- Add Faculty Button -->
+    <div class="flex justify-end mb-4">
+        <a href="{% url 'register' %}"
+           class="bg-violet-400 text-white px-5 py-2 rounded-lg
+                  hover:bg-violet-500 transition text-sm font-medium shadow">
+            + Add Faculty
+        </a>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+    <table class="w-full border border-violet-200 rounded-lg overflow-hidden">
+        <tr class="bg-violet-200 text-violet-900">
+            <th class="p-3 text-left">Name</th>
+            <th class="p-3 text-left">Email</th>
+            <th class="p-3 text-left">Department</th>
+            <th class="p-3 text-center">Actions</th>
+        </tr>
+
+        {% for t in teachers %}
+        <tr class="bg-white hover:bg-violet-50 transition">
+            <td class="p-3">{{ t.name }}</td>
+            <td class="p-3">{{ t.email }}</td>
+            <td class="p-3">
+                {{ t.department.department_name }}
+            </td>
+            <td class="p-3 text-center">
+                <a href="{% url 'faculty_edit' t.pk %}"
+                   class="text-violet-600 hover:underline font-medium">
+                    Edit
+                </a>
+                |
+                <a href="{% url 'faculty_delete' t.pk %}"
+                   onclick="return confirm('Delete faculty?')"
+                   class="text-rose-500 hover:underline font-medium">
+                    Delete
+                </a>
+            </td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="4" class="p-6 text-center text-violet-500">
+                No faculty found.
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <div class="mt-8 ml-6">
+    <a href="{% url 'admin_home' %}"
+       class="inline-flex items-center gap-2
+              px-5 py-2 rounded-full
+              bg-violet-200 text-violet-800
+              hover:bg-violet-300 transition shadow-sm font-medium text-sm">
+        ← Back to Admin Home
+    </a>
+</div>
+    </div>
+
+</div>
+
+</div>

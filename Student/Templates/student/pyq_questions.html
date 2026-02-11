@@ -1,0 +1,136 @@
+{% extends 'student/base.html' %}
+{% block content %}
+
+<div class="min-h-screen bg-slate-100 py-8">
+    <div class="max-w-6xl mx-auto px-4">
+
+        <!-- MAIN HEADER -->
+        <div class="bg-indigo-500 text-white text-center py-4 rounded-xl shadow mb-6">
+            <h2 class="text-2xl font-bold">
+                Question Papers for Previous Year Examinations
+            </h2>
+        </div>
+
+        <!-- YEAR SEARCH -->
+        <div class="flex justify-center mb-6">
+            <input type="text"
+                   id="yearSearch"
+                   placeholder="Search by Year (e.g. 2006)"
+                   class="w-72 px-4 py-2 rounded-lg border border-indigo-300
+                          focus:outline-none focus:ring-2 focus:ring-indigo-400
+                          text-center text-indigo-700 shadow-sm"
+                   onkeyup="filterYear()">
+        </div>
+
+        {% if pyqs %}
+            {% regroup pyqs by year as year_list %}
+
+            {% for year in year_list %}
+            <!-- YEAR BLOCK -->
+            <div class="year-block mb-6" data-year="{{ year.grouper }}">
+
+                <!-- YEAR HEADER -->
+                <button onclick="toggleYear('year{{ forloop.counter }}', this)"
+                        class="w-full bg-indigo-400 text-white px-6 py-3 rounded-lg
+                               flex justify-between items-center shadow">
+                    <span class="text-lg font-semibold">
+                        Year : {{ year.grouper }}
+                    </span>
+                    <span class="text-2xl">+</span>
+                </button>
+
+                <!-- YEAR CONTENT (HIDDEN BY DEFAULT) -->
+                <div id="year{{ forloop.counter }}"
+                     class="bg-white shadow rounded-b-lg p-6 hidden">
+
+                    {% regroup year.list by course_name.course_name as course_list %}
+                    {% for course in course_list %}
+                        <h3 class="text-lg font-semibold text-indigo-600 mb-4">
+                            Course : {{ course.grouper }}
+                        </h3>
+
+                        <!-- TABLE -->
+                        <div class="overflow-x-auto mb-6">
+                            <table class="w-full border border-gray-300 rounded-lg overflow-hidden">
+                                <thead class="bg-indigo-100 text-indigo-700">
+                                    <tr>
+                                        <th class="border px-4 py-2 text-left">
+                                            Subject Name
+                                        </th>
+                                        <th class="border px-4 py-2 text-center">
+                                            Download
+                                        </th>
+                                        <th class="border px-4 py-2 text-center">
+                                            File Type
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% regroup course.list by subject.subject_name as subject_list %}
+                                    {% for subject in subject_list %}
+                                        {% for q in subject.list %}
+                                        <tr class="even:bg-slate-50 hover:bg-indigo-50 transition">
+                                            <td class="border px-4 py-2 font-medium">
+                                                {{ subject.grouper }}
+                                            </td>
+                                            <td class="border px-4 py-2 text-center">
+                                                <a href="{{ q.file.url }}" target="_blank"
+                                                   class="text-indigo-500 font-semibold underline hover:text-indigo-700">
+                                                    Download
+                                                </a>
+                                            </td>
+                                            <td class="border px-4 py-2 text-center">
+                                                PDF
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center text-gray-500">
+                No Question Papers Available
+            </p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- JAVASCRIPT -->
+<script>
+/* Toggle Year Section */
+function toggleYear(id, btn) {
+    const content = document.getElementById(id);
+    const icon = btn.querySelector('span:last-child');
+
+    content.classList.toggle('hidden');
+
+    if (content.classList.contains('hidden')) {
+        icon.textContent = '+';
+    } else {
+        icon.textContent = '−';
+    }
+}
+
+/* Search Year */
+function filterYear() {
+    const input = document.getElementById("yearSearch").value.toLowerCase();
+    const years = document.getElementsByClassName("year-block");
+
+    for (let i = 0; i < years.length; i++) {
+        const yearValue = years[i].getAttribute("data-year");
+
+        if (yearValue.includes(input) || input === "") {
+            years[i].style.display = "block";
+        } else {
+            years[i].style.display = "none";
+        }
+    }
+}
+</script>
+
+{% endblock %}

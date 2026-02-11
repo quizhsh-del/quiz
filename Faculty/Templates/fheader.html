@@ -1,63 +1,53 @@
-{% comment %} <div>
-    <ul> 
-        <li><a href="{% url 'student_register' %}">Student registeraton</a></li>
-        
-        <li><a href="{% url 'question_insert'%}">Upload course</a></li> 
-         <li><a href="{% url 'upload_question'%}">Upload Question</a></li>
-        <li><a href="{% url 'question_displays'%}">Question list</a></li>
-        <li><a href="{% url 'quiz_insert'%}">Upload Quiz</a></li>
-    
-        <li><a href="{% url 'quiz_display'%}">Quiz list</a></li>
-        <li><a href="{% url 'student_list'%}">studentlist</a></li>
-    </ul>
-</div> {% endcomment %}
 {% load static %}
-{% load widget_tweaks %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz And PYQ  System </title>
+<header class="bg-white/80 backdrop-blur-md shadow-md border-b border-[#EDE9FE]">
+    <nav class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Logo -->
+        <a href="{% url 'commonhome' %}" class="flex items-center space-x-3">
+            <img src="{% static 'images/download.jpg.webp' %}"
+                 alt="Logo"
+                 class="h-12 w-12 rounded-lg shadow" />
+            <span class="text-xl font-bold text-[#4C1D95]">
+                Quiz & PYQ System
+            </span>
+        </a>
 
-</head>
+        <!-- Navigation Links -->
+        <div class="flex items-center space-x-2 text-sm font-medium">
 
-<body class="bg-black-50 text-white">
-
-    <!-- ====================== HEADER ====================== -->
-    <header class=" bg-black shadow-sm">
-
-        <nav class="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between">
-            
-          <a href="{% url 'commonhome' %}">
-            <img src="{% static 'images/download.jpg.webp' %}" alt="Logo" class="h-25 w-20 mr-3" />
-          </a>
-
-            <div class="space-x-4">
-                 <a href="{% url 'student_register' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700 ">
-                student register
-                <a href="{% url 'question_insert' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
-                upload course
-                </a>
-                <a href="{% url 'upload_question' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
-                    upload question
+            <a href="{% url 'subject_upload' %}"
+               class="px-4 py-2 rounded-lg text-[#4C1D95] hover:bg-[#EDE9FE] transition">
+                Create Subject
             </a>
-                <a href="{% url 'quiz_insert' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
+
+            <a href="{% url 'course_insert' %}"
+               class="px-4 py-2 rounded-lg text-[#4C1D95] hover:bg-[#EDE9FE] transition">
+                Create Course
+            </a>
+
+            <a href="{% url 'upload_question' %}"
+               class="px-4 py-2 rounded-lg text-[#4C1D95] hover:bg-[#EDE9FE] transition">
+                Upload Question
+            </a>
+
+            <a href="{% url 'quiz_create' %}"
+                class="hover:text-purple-900 font-semibold">
+                Create Quiz
+                </a>
+
+            <a href="{% url 'faculty_quiz_insert' %}"
+               class="px-4 py-2 rounded-lg text-[#4C1D95] hover:bg-[#EDE9FE] transition">
                 Quiz Insert
-                </a>
-                <a href="{% url 'faculty_home' %}"
-                    class=" px-2 py-1 text-sm font-medium bg-white-500 text-white rounded hover:bg-gray-700">
-                home
-                </a>
-            </div>
-        </nav>
-    </header>
-</body> 
+            </a>
+
+            <!-- Highlighted Home Button -->
+            <a href="{% url 'commonhome' %}"
+               class="ml-2 px-4 py-2 rounded-lg bg-[#A78BFA] text-white
+                      hover:bg-[#8B5CF6] transition shadow">
+                Logout
+            </a>
+
+        </div>
+    </nav>
+</header>

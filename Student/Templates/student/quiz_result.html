@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+{% include 'sheader.html' %}
+
+<div class="max-w-4xl mx-auto mt-10 mb-16 bg-white p-8 rounded-xl shadow">
+
+    <!-- Quiz Title -->
+    <h2 class="text-2xl font-bold text-indigo-600 mb-2">
+        {{ quiz.quiz_name }}
+    </h2>
+
+    <!-- Attempt Type -->
+    {% if attempt.is_mock %}
+        <span class="inline-block bg-orange-100 text-orange-600 px-3 py-1 rounded text-sm mb-3">
+            🧪 Mock Attempt
+        </span>
+    {% else %}
+        <span class="inline-block bg-green-100 text-green-600 px-3 py-1 rounded text-sm mb-3">
+            🎯 Real Attempt
+        </span>
+    {% endif %}
+
+    <!-- Score -->
+    <p class="mb-4 text-slate-700">
+        Score:
+        <span class="font-semibold">{{ attempt.score }}</span>
+        |
+        {% if attempt.passed %}
+            <span class="text-green-600 font-semibold">Passed</span>
+        {% else %}
+            <span class="text-red-600 font-semibold">Failed</span>
+        {% endif %}
+    </p>
+
+    <!-- Reattempt (Mock Only) -->
+    {% if attempt.is_mock %}
+        <a href="{% url 'student_quiz_attempt' quiz.id %}?mock=1"
+           class="inline-block mb-6 bg-orange-500 hover:bg-orange-600
+                  text-white px-6 py-2 rounded-lg shadow">
+            🔄 Reattempt Mock Quiz
+        </a>
+    {% endif %}
+
+    <!-- Questions -->
+    {% for q in questions %}
+    <div class="mb-6 border-t pt-4">
+
+        <!-- Question -->
+        <p class="font-medium text-slate-800 mb-2">
+            {{ forloop.counter }}. {{ q.question_text }}
+        </p>
+
+        <!-- Options -->
+        {% for opt in q.options.all %}
+        <p class="ml-4 mb-1 {% if opt.is_correct %}text-green-700 font-medium{% endif %}">
+            {% if forloop.counter == 1 %}a
+            {% elif forloop.counter == 2 %}b
+            {% elif forloop.counter == 3 %}c
+            {% elif forloop.counter == 4 %}d
+            {% endif %}
+            ) {{ opt.option_text }}
+        </p>
+        {% endfor %}
+
+        <!-- Toggle -->
+        <button
+            onclick="toggleAnswer('{{ q.id }}', this)"
+            class="mt-2 border px-3 py-1 text-sm rounded hover:bg-slate-100">
+            View Answer
+        </button>
+
+        <!-- Answer & Explanation -->
+        <div id="answer-{{ q.id }}" class="hidden ml-4 mt-2">
+
+            <p class="font-medium">
+                Answer:
+                {% for opt in q.options.all %}
+                    {% if opt.is_correct %}
+                        {% if forloop.counter == 1 %}a
+                        {% elif forloop.counter == 2 %}b
+                        {% elif forloop.counter == 3 %}c
+                        {% elif forloop.counter == 4 %}d
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </p>
+
+            {% for opt in q.options.all %}
+                {% if opt.is_correct and opt.explananation %}
+                <p class="text-sm text-slate-600 mt-1">
+                    <b>Explanation:</b> {{ opt.explananation }}
+                </p>
+                {% endif %}
+            {% endfor %}
+        </div>
+
+    </div>
+    {% endfor %}
+
+    <!-- Navigation -->
+    <div class="flex justify-between items-center mt-8">
+        <a href="{% url 'quiz_attempt' %}"
+           class="text-indigo-500 hover:underline">
+            ← Back to Quiz List
+        </a>
+
+        <a href="{% url 'result_history' %}"
+           class="text-indigo-500 hover:underline">
+            View Result History →
+        </a>
+    </div>
+
+</div>
+
+<!-- Toggle Script -->
+<script>
+function toggleAnswer(id, btn) {
+    const el = document.getElementById('answer-' + id);
+
+    if (el.classList.contains('hidden')) {
+        el.classList.remove('hidden');
+        btn.innerText = 'Hide Answer';
+    } else {
+        el.classList.add('hidden');
+        btn.innerText = 'View Answer';
+    }
+}
+</script>
+
+</body>
+</html>
