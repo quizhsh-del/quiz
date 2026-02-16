@@ -2,20 +2,48 @@
 <html>
 <head>
     <title>Edit Faculty</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gradient-to-br from-purple-100 to-indigo-100 min-h-screen flex items-center justify-center">
 
-<h2>Edit Faculty Details</h2>
+    <div class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-lg">
+        
+        <!-- Heading -->
+        <div class="mb-6 text-center">
+            <h2 class="text-2xl font-bold text-purple-700">
+                Edit Faculty Details
+            </h2>
+            <div class="w-16 h-1 bg-purple-400 mx-auto mt-2 rounded"></div>
+        </div>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
+        <!-- Form -->
+        <div>
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+                
+                <div class="space-y-4">
+                    {{ form.as_p }}
+                </div>
 
-    <button type="submit">Update</button>
-</form>
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 rounded-lg transition duration-300 shadow-md">
+                        Update
+                    </button>
+                </div>
+            </form>
+        </div>
 
-<br>
-<a href="{% url 'teachers_list' %}">Back to Teacher List</a>
+        <!-- Back Link -->
+        <div class="mt-6 text-center">
+            <a href="{% url 'teachers_list' %}"
+               class="text-purple-600 hover:text-purple-800 font-medium hover:underline">
+                ← Back to Teacher List
+            </a>
+        </div>
+
+    </div>
 
 </body>
 </html>
+

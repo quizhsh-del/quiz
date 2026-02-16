@@ -12,6 +12,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.db.models.deletion import ProtectedError
 
+from Common.util import  send_emails
+
 def login(request):
     reg = FacultyRegistrationForm()
     return render(request,'faculty/login.html', {'form':reg})
@@ -23,16 +25,41 @@ def register(request):
     return render(request,'faculty/register.html', {'form':regs})
 
 
+
 def faculty_reg(request):
     if request.method == "POST":
         form = FacultyRegistrationForm(request.POST)
+
         if form.is_valid():
-            form.save()
+            faculty = form.save()
+
+            
+            email = form.cleaned_data.get('email')
+            faculty_id = form.cleaned_data.get('faculty_id')
+            password = form.cleaned_data.get('password')
+
+            subject = "Registration Info"
+            body = f"""Registration on quiz
+Faculty ID: {faculty_id}
+Email: {email} 
+"password : {password}
+"""
+
+            if email:
+                send_emails(receiver=email, subject=subject, body=body)
+
+            messages.success(request, "Registration successful. Please login.")
             return redirect('login')
+
         else:
-            print(form.errors)
+            # Show form errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+
     else:
         form = FacultyRegistrationForm()
+
     return render(request, 'faculty/register.html', {'form': form})
 
 
@@ -50,7 +77,7 @@ def floginaction(request):
             request.session["faculty_id"] = faculty.faculty_id
             return redirect("faculty_home")
         except FacultyRegistration.DoesNotExist:
-            messages.error(request, "Invalid Faculty ID or Password")
+            error = "Invalid Roll Number or Password"
     return render(request, "faculty/login.html",{'form':reg})
 
 

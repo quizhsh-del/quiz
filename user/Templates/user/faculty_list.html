@@ -27,20 +27,20 @@
             <th class="p-3 text-center">Actions</th>
         </tr>
 
-        {% for t in teachers %}
+        {% for d in data %}
         <tr class="bg-white hover:bg-violet-50 transition">
-            <td class="p-3">{{ t.name }}</td>
-            <td class="p-3">{{ t.email }}</td>
+            <td class="p-3">{{ d.faculty_name }}</td>
+            <td class="p-3">{{ d.email }}</td>
             <td class="p-3">
                 {{ t.department.department_name }}
             </td>
             <td class="p-3 text-center">
-                <a href="{% url 'faculty_edit' t.pk %}"
+                <a href="{% url 'faculty_edit' d.pk %}"
                    class="text-violet-600 hover:underline font-medium">
                     Edit
                 </a>
                 |
-                <a href="{% url 'faculty_delete' t.pk %}"
+                <a href="{% url 'faculty_delete' d.pk %}"
                    onclick="return confirm('Delete faculty?')"
                    class="text-rose-500 hover:underline font-medium">
                     Delete

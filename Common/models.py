@@ -11,13 +11,16 @@ class Department(models.Model):
 
 # Admin Registration
 
-
+class Adminstrator(models.Model):
+    user_name = models.CharField(max_length=30, primary_key=True)
+    password = models.CharField(max_length=128) 
 
 # Faculty Registration
 class FacultyRegistration(models.Model):
     faculty_id = models.CharField(max_length=30, primary_key=True)
     faculty_name = models.CharField(max_length=30)
     password = models.CharField(max_length=128)
+    email  = models.EmailField(null=True,unique=True)
     department = models.ForeignKey(
         Department,
         on_delete=models.PROTECT,

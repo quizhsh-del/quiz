@@ -92,3 +92,6 @@ def rebuild_mcq_stem(question):
 
     templates = STEM_TEMPLATES.get(intent, STEM_TEMPLATES["general"])
     return random.choice(templates).format(topic=topic)
+
+
+

@@ -22,8 +22,8 @@ path('adminaction',views.admin_reg,name='admin_reg'),
 # Department
 path('department/add/', views.department_add, name='department_add'),
 path('department/list/', views.department_list, name='department_list'),
-path('department/edit/<int:id>/', views.department_edit, name='department_edit'),
-path('department/delete/<int:id>/', views.department_delete, name='department_delete'),
+path('department/edit/<str:id>/', views.department_edit, name='department_edit'),
+path('department/delete/<str:id>/', views.department_delete, name='department_delete'),
 
 
 path("admin/login/", views.admin_login, name="admin_login"),

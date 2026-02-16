@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'user',
     'Common',
     'Faculty',
-    'student',
+    'Student',
     'widget_tweaks',
     ]
 
@@ -131,7 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 EMAIL_NAME = "quizhsh@gmail.com"
-EMAIL_PASSWORD = 'xocd dknh icxg jpvt'
+EMAIL_PASSWORD = 'fjku tlsn dcpc wcus'
 
 
 MEDIA_URL = '/media/'

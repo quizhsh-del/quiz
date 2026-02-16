@@ -14,24 +14,26 @@ def stlogin(request):
 
 
 def student_reg(request):
+    print("hitted")
     if request.method == "POST":
         form = StudentRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             print("Saved successfully")
-            return redirect('student_register')
+            return redirect('student_login')
         else:
             print(form.errors)  
     else:
         form = StudentRegistrationForm()
 
-    return render(request, 'student/stlogin.html', {'form': form})
+    return render(request, 'student/stregister.html', {'form': form})
 
 def sloginaction(request):
     error = None
     form = StudentLoginForm()
 
     if request.method == "POST":
+        print("hitted")
         form = StudentLoginForm(request.POST)
         roll_no = request.POST.get('roll_no')
         password = request.POST.get('password')
@@ -44,7 +46,7 @@ def sloginaction(request):
             )
             print(student)
 
-            request.session['roll_no'] = roll_no
+            request.session['student_roll'] = roll_no
             print("redirected")
             return redirect('student_home')
             
@@ -65,8 +67,6 @@ def sloginaction(request):
 
 
 def student_home(request):
-    if 'student_roll' not in request.session:
-        return redirect('student_login')
 
     student = StudentRegistration.objects.get(
         roll_no=request.session['student_roll']
@@ -116,7 +116,7 @@ from .utils import rebuild_mcq_stem
 
 
 def result_history(request):
-    roll_no = request.session.get('roll_no')
+    roll_no = request.session.get('student_roll')
     student = StudentRegistration.objects.get(roll_no=roll_no)
 
     attempts = QuizAttempt.objects.filter(
@@ -142,9 +142,7 @@ def student_quiz_attempt(request, quiz_id):
 
     quiz = get_object_or_404(Quiz, id=quiz_id)
 
-    roll_no = request.session.get("roll_no")
-    if not roll_no:
-        return redirect("student_login")
+    roll_no = request.session.get("student_roll")
 
     student = get_object_or_404(StudentRegistration, roll_no=roll_no)
 
@@ -270,7 +268,7 @@ def student_email_page(request):
 
 # Create your views here.
 def result_history(request):
-    roll_no = request.session.get('roll_no')
+    roll_no = request.session.get('student_roll')
 
     if not roll_no:
         return redirect('student_login')

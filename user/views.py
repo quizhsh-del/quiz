@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from django.db.models import Count
 from Common.models import Department,FacultyRegistration,QuestionBank
 
-from Common.forms import DepartmentForm,FacultyRegistrationForm
+from Common.forms import DepartmentForm,FacultyRegistrationForm,FacultyEditform
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -58,21 +58,21 @@ def ahome(request):
     return render(request,"ahome.html")
 
 def faculty_edit(request, faculty_id):
-    faculty = get_object_or_404(FacultyRegistrationForm, faculty_id=faculty_id)
+    faculty = get_object_or_404(FacultyRegistration, faculty_id=faculty_id)
 
     if request.method == "POST":
-        form = FacultyRegistrationForm(request.POST, instance=faculty)
+        form = FacultyEditform(request.POST, instance=faculty)
         if form.is_valid():
             form.save()
             return redirect('teachers_list')
     else:
-        form = FacultyRegistrationForm(instance=faculty)
+        form = FacultyEditform(instance=faculty)
 
     return render(request, "faculty_edit.html", {"form": form, "faculty": faculty})
 
 
 def faculty_delete(request, faculty_id):
-    faculty = get_object_or_404(FacultyRegistrationForm, faculty_id=faculty_id)
+    faculty = get_object_or_404(FacultyRegistration, faculty_id=faculty_id)
     faculty.delete()
     return redirect('teachers_list')
 

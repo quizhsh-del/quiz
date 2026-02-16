@@ -1,14 +1,4 @@
-{% comment %} <h2>teacher list</h2>
-{% include 'uheader.html' %}
-{% for t in teacherdata %}
-    <h3>{{ t.faculty_name }}</h3>
-    <ul>
-        <li>department name :{{t.department_name}}</li>
-        <li>faculty id :{{t.faculty_id}}</li>
-       
-    </ul>
-    <hr>
-    {% endfor %} {% endcomment %}
+
 <!DOCTYPE html>
 {% include 'uheader.html' %}
 {% load widget_tweaks %}
@@ -38,6 +28,7 @@
                     <tr class="hover:bg-violet-100">
                         <td class="py-3 px-6 border-b border-gray-300">{{ t.faculty_name }}</td>
                         <td class="py-3 px-6 border-b border-gray-300">{{ t.department_name }}</td>
+                        <td class="py-3 px-6 border-b border-gray-300">{{ t.faculty_id }}</td>
                         <td class="py-3 px-6 border-b border-gray-300">{{ t.faculty_id }}</td>
                     </tr>
                     {% endfor %}

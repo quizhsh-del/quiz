@@ -8,7 +8,7 @@ from .import views
 urlpatterns = [
     #rendered
 # path('student',views.stlogin,name='student_login'),
-# path('stregister',views.stregister,name='student_register'),
+path('stregister',views.student_reg,name='student_register'),
 path('passwordchange/student',views.passwordchange,name='password_change'), 
 # path('quizattempt',views.quizattempt,name='quiz_attempt'),
 # path('pyq',views.pyq,name='pyq'),
@@ -21,7 +21,7 @@ path('select-option', views.select_option, name='select_option'),
 
 
 #actioinperfomed
-# path('studentaction',views.student_reg,name='student_reg'),
+path('studentaction',views.student_reg,name='student_reg'),
 # path('student_log_page',views.sloginaction,name='slogin'),
 
 path('sregister', views.student_reg, name='student_register'),

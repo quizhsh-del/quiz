@@ -30,6 +30,12 @@ class DepartmentForm(forms.ModelForm):
         }
 
 
+class FacultyEditform(forms.ModelForm):
+    class Meta:
+        model = FacultyRegistration
+        exclude = ['password']
+
+
 
 # ---------------------------------
 # Faculty Registration Form
