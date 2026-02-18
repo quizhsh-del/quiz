@@ -10,72 +10,72 @@
 
 <body class="min-h-screen bg-gradient-to-br from-[#F5F3FF] via-[#FDF4FF] to-[#ECFEFF]">
 
-    <!-- Page Wrapper -->
-    <div class="min-h-[calc(100vh-64px)] flex items-center justify-center px-4">
+<div class="min-h-[calc(100vh-64px)] flex items-center justify-center px-4">
 
-        <!-- Registration Card -->
-        <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#EDE9FE] p-10">
+    <div class="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#EDE9FE] p-10">
 
-            <!-- Title -->
-            <h2 class="text-3xl font-bold text-center text-[#4C1D95] mb-8">
-                Faculty Registration
-            </h2>
+        <h2 class="text-3xl font-bold text-center text-[#4C1D95] mb-8">
+            Faculty Registration
+        </h2>
 
-            <!-- Form -->
-            <form method="POST" action="{% url 'faculty_reg' %}" class="space-y-5">
-                {% csrf_token %}
+        <form method="POST" action="{% url 'faculty_reg' %}" class="space-y-5">
 
-                <!-- Faculty ID -->
-                <div>
-                    {{ form.faculty_id.label_tag }}
-                    {{ form.faculty_id|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
-                </div>
+            {% csrf_token %}
 
-                <div>
-                    {{ form.email.label_tag }}
-                    {{ form.email|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
-                </div>
+            <!-- Faculty ID -->
+            <div>
+                <label class="block font-medium">Faculty id:</label>
+                {{ form.faculty_id|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:ring-2 focus:ring-[#C4B5FD]"|attr:"placeholder:Enter Faculty ID" }}
+                <p class="text-red-500 text-sm">{{ form.faculty_id.errors }}</p>
+            </div>
 
-                <!-- Faculty Name -->
-                <div>
-                    {{ form.faculty_name.label_tag }}
-                    {{ form.faculty_name|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
-                </div>
+            <!-- Email -->
+            <div>
+                <label class="block font-medium">Email:</label>
+                {{ form.email|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:ring-2 focus:ring-[#C4B5FD]"|attr:"placeholder:Enter Email" }}
+                <p class="text-red-500 text-sm">{{ form.email.errors }}</p>
+            </div>
 
-                <!-- Department -->
-                <div>
-                    {{ form.department.label_tag }}
-                    {{ form.department|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
-                </div>
+            <!-- Faculty Name -->
+            <div>
+                <label class="block font-medium">Faculty name:</label>
+                {{ form.faculty_name|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg bg-gray-100 focus:ring-2 focus:ring-[#C4B5FD]"|attr:"placeholder:Enter Faculty Name" }}
+                <p class="text-red-500 text-sm">{{ form.faculty_name.errors }}</p>
+            </div>
+
+            <!-- Department -->
+            <div>
+                <label class="block font-medium">Department:</label>
+                {{ form.department|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:ring-2 focus:ring-[#C4B5FD]" }}
+                <p class="text-red-500 text-sm">{{ form.department.errors }}</p>
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block font-medium">Password:</label>
+                {{ form.password|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:ring-2 focus:ring-[#C4B5FD]"|attr:"placeholder:Enter Password" }}
+                <p class="text-red-500 text-sm">{{ form.password.errors }}</p>
+            </div>
 
 
-                <!-- Password -->
-                <div>
-                    {{ form.password.label_tag }}
-                    {{ form.password|add_class:"w-full mt-1 px-4 py-2 border border-[#DDD6FE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C4B5FD]" }}
-                </div>
+            <button type="submit"
+                class="w-full mt-6 bg-[#A78BFA] text-white py-3 rounded-xl font-semibold hover:bg-[#8B5CF6] transition duration-300 shadow-lg">
+                Register
+            </button>
 
-                
+            <p class="text-center text-sm text-gray-500 mt-4">
+                Back to home
+                <a href="{% url 'admin_home' %}"
+                class="text-[#7C3AED] font-semibold hover:underline">
+                Back to home
+                </a>
+            </p>
 
-                <!-- Submit Button -->
-                <button
-                    type="submit"
-                    class="w-full mt-6 bg-[#A78BFA] text-white py-3 rounded-xl font-semibold
-                           hover:bg-[#8B5CF6] transition duration-300 shadow-lg">
-                    Register
-                </button>
+        </form>
 
-                <p class="text-center text-sm text-gray-500 mt-4">
-                    Already registered?
-                    <a href="{% url 'login' %}"
-                    class="text-[#7C3AED] font-semibold hover:underline">
-                    Login here
-                    </a>
-                </p>
-            </form>
-
-        </div>
     </div>
+
+</div>
 
 </body>
 </html>

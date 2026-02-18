@@ -140,17 +140,12 @@ class StudentEditForm(forms.ModelForm):
 class CourseForm(forms.ModelForm):
     class Meta:
         model = Course
-        fields = '__all__'
-        widgets = {
-            'department': forms.Select(attrs={
-                'class': 'form-control'
-            }),
-            'course_name': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter Course Name'
-            }),
+        fields = "__all__"
+        error_messages = {
+            'course_name': {
+                'unique': "This course already exists!"
+            }
         }
-
 
 # ---------------------------------
 # Subject Form
@@ -203,16 +198,13 @@ class QuestionBankForm(forms.ModelForm):
 class QuizForm(forms.ModelForm):
     class Meta:
         model = Quiz
-        fields = '__all__'
+        exclude = ['faculty']   # ⭐ IMPORTANT
         widgets = {
-            'subject': forms.Select(attrs={
-                'class': 'form-control'
-            }),
+            'subject': forms.Select(attrs={'class': 'form-control'}),
             'semester': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter Semester'
             }),
-        
             'quiz_name': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter Quiz Name'
@@ -222,6 +214,7 @@ class QuizForm(forms.ModelForm):
                 'placeholder': 'Enter Pass Mark'
             }),
         }
+
 
 
 # ---------------------------------

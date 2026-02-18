@@ -19,11 +19,9 @@ def login(request):
     return render(request,'faculty/login.html', {'form':reg})
 
 
-
 def register(request):
     regs=FacultyRegistrationForm()
     return render(request,'faculty/register.html', {'form':regs})
-
 
 
 def faculty_reg(request):
@@ -49,7 +47,7 @@ Email: {email}
                 send_emails(receiver=email, subject=subject, body=body)
 
             messages.success(request, "Registration successful. Please login.")
-            return redirect('login')
+            return redirect('teachers_list')
 
         else:
             # Show form errors
@@ -82,7 +80,21 @@ def floginaction(request):
 
 
 def students(request):
-    students = StudentRegistration.objects.all()   
+
+    faculty_id = request.session.get('faculty_id')
+
+    if not faculty_id:
+        return redirect('faculty_login')
+
+    # Use correct PK field
+    faculty = FacultyRegistration.objects.get(
+        faculty_id=faculty_id
+    )
+
+    students = StudentRegistration.objects.filter(
+        department=faculty.department
+    )
+
     return render(request, 'studentlist.html', {
         'students': students
     })
@@ -124,8 +136,25 @@ def course_insert(request):
 
 
 def cource_list(request):
-    courses = Course.objects.select_related('department').all()
-    return render(request, 'faculty/cource_list.html', {'courses': courses})
+
+    faculty_id = request.session.get("faculty_id")
+
+    if not faculty_id:
+        return redirect("faculty_login")
+
+    faculty = get_object_or_404(FacultyRegistration, faculty_id=faculty_id)
+
+
+    courses = Course.objects.select_related('department').filter(
+        department=faculty.department
+    )
+
+
+    return render(request, 'faculty/cource_list.html', {
+
+        'courses': courses
+
+    })
 
 
 def course_edit(request, id):
@@ -193,10 +222,13 @@ def subject_upload(request):
 
 
 def subject_list(request):
-    subjects = Subject.objects.select_related('course', 'department')
+
+    subjects = Subject.objects.select_related('course', 'course__department').all()
+
     return render(request, 'faculty/subject_list.html', {
         'subjects': subjects
     })
+
 
 
 def subject_edit(request, id):
@@ -295,26 +327,48 @@ def faculty_quiz_insert(request):
 
 
 def create_quiz(request):
-    form = QuizForm()
 
-    if request.method == 'POST':
+    faculty_id = request.session.get("faculty_id")
+
+    if not faculty_id:
+        return redirect("faculty_login")
+
+    faculty = get_object_or_404(
+        FacultyRegistration,
+        faculty_id=faculty_id
+    )
+
+    if request.method == "POST":
         form = QuizForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('faculty_quiz_insert')  # go to insert questions
 
-    return render(request, 'faculty/create_quiz.html', {
-        'form': form
+        if form.is_valid():
+            quiz = form.save(commit=False)
+            quiz.faculty = faculty   # assign owner
+            quiz.save()
+
+            return redirect("faculty_quiz_insert")
+
+    else:
+        form = QuizForm()
+
+    return render(request, "faculty/create_quiz.html", {
+        "form": form
     })
 
 
-def faculty_course_quizzes(request, course_id):
-    course = Course.objects.get(id=course_id)
 
-    quizzes = Quiz.objects.filter(subject__course=course)
+def faculty_course_quizzes(request, course_id):
+
+    faculty_id = request.session.get("faculty_id")
+    if not faculty_id:
+        return redirect("faculty_login")
+
+    quizzes = Quiz.objects.filter(
+        subject__course_id=course_id,
+        faculty_id=faculty_id
+    )
 
     return render(request, "faculty/course_quiz_list.html", {
-        "course": course,
         "quizzes": quizzes
     })
 
@@ -330,14 +384,6 @@ def faculty_quiz_detail(request, quiz_id):
         'questions': questions
     })
 
-# def questiondisplay(request):
-#      data=QuestionBank.objects.all()
-#      return render(request,"questiondisplay.html",{'questiondata':data})
-
-
-# def quizdisplay(request):
-#     data=QuizQuestionForm.objects.all()
-#     return render(request,"quizdisplay.html",{'quizdata':data})
  
 def home(request):
     return render(request,"home.html")
@@ -352,27 +398,37 @@ def home(request):
 
 #     return HttpResponse("apppploded")
 
-
 def quiz_edit(request, quiz_id):
-    q = get_object_or_404(quiz, quiz_id=quiz_id)
-    
+    faculty_id = request.session.get("faculty_id")
+
+    quiz = get_object_or_404(
+        Quiz,
+        id=quiz_id,
+        faculty__faculty_id=faculty_id   
+    )
+
     if request.method == "POST":
-        form = quizForm(request.POST, instance=q)
-        if form.is_valid():
-            form.save()
-            return redirect('quiz_display')
+        quiz.quiz_name = request.POST.get("quiz_name")
+        quiz.semester = request.POST.get("semester")
+        quiz.pass_mark = request.POST.get("pass_mark")
+        quiz.save()
 
-    else:
-        form = quizForm(instance=q)
+        return redirect("quiz_list")
 
-    return render(request, 'quizedit.html', {'form': form})
+    return render(request, "faculty/edit_quiz.html", {"quiz": quiz})
 
 
 def quiz_delete(request, quiz_id):
-    q = get_object_or_404(quiz, quiz_id=quiz_id)
-    q.delete()
-    return redirect('quiz_display')
+    faculty_id = request.session.get("faculty_id")
 
+    quiz = get_object_or_404(
+        Quiz,
+        id=quiz_id,
+        faculty__faculty_id=faculty_id
+    )
+
+    quiz.delete()
+    return redirect("quiz_list")
 
 
 # def upload_question_action(request):#view action
@@ -496,3 +552,12 @@ def delete_result(request, result_id):
 #             return JsonResponse({"new_question": new_q})
 #         return JsonResponse({"error": "No question"}, status=400)
     
+# def student_delete(request, id):
+
+#     if request.method == "POST":
+
+#         student = Student.objects.get(id=id)
+
+#         student.delete()
+
+#     return redirect('student_list')

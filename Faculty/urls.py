@@ -65,7 +65,9 @@ path('faculty/courses/<int:course_id>/quizzes/',views.faculty_course_quizzes,nam
 
 path('quiz/<int:quiz_id>/details/',views.faculty_quiz_detail,name='faculty_quiz_detail'),
 # path("quiz/regenerate/",views.quiz_regenerate_nlp,name="quiz_regenerate_nlp"),
-
+#  path('delete_student/<str:roll_no>/',
+#          views.delete_student,
+#          name='delete_student'),
 
 ]
 

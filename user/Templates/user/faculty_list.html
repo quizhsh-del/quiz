@@ -4,6 +4,7 @@
 
 <div class="max-w-6xl mx-auto bg-violet-100 p-6 rounded-2xl shadow-lg">
 
+    <!-- Title -->
     <h2 class="text-2xl font-bold text-center mb-6 text-violet-900">
         Faculty List
     </h2>
@@ -19,53 +20,95 @@
 
     <!-- Table -->
     <div class="overflow-x-auto">
+
     <table class="w-full border border-violet-200 rounded-lg overflow-hidden">
+
+        <!-- Table Header -->
+        <thead>
         <tr class="bg-violet-200 text-violet-900">
             <th class="p-3 text-left">Name</th>
             <th class="p-3 text-left">Email</th>
             <th class="p-3 text-left">Department</th>
             <th class="p-3 text-center">Actions</th>
         </tr>
+        </thead>
+
+
+        <!-- Table Body -->
+        <tbody>
 
         {% for d in data %}
+
         <tr class="bg-white hover:bg-violet-50 transition">
-            <td class="p-3">{{ d.faculty_name }}</td>
-            <td class="p-3">{{ d.email }}</td>
-            <td class="p-3">
-                {{ t.department.department_name }}
+
+            <!-- Name -->
+            <td class="p-3 font-medium text-violet-900">
+                {{ d.faculty_name }}
             </td>
+
+            <!-- Email -->
+            <td class="p-3 text-violet-700">
+                {{ d.email }}
+            </td>
+
+        
+            <td class="p-3 text-violet-700">
+                {{ d.department.department_name }}
+            </td>
+
+            <!-- Actions -->
             <td class="p-3 text-center">
+
                 <a href="{% url 'faculty_edit' d.pk %}"
                    class="text-violet-600 hover:underline font-medium">
                     Edit
                 </a>
+
                 |
+
                 <a href="{% url 'faculty_delete' d.pk %}"
                    onclick="return confirm('Delete faculty?')"
                    class="text-rose-500 hover:underline font-medium">
                     Delete
                 </a>
+
             </td>
+
         </tr>
 
         {% empty %}
+
         <tr>
-            <td colspan="4" class="p-6 text-center text-violet-500">
+            <td colspan="4"
+                class="p-6 text-center text-violet-500 font-medium">
                 No faculty found.
             </td>
         </tr>
+
         {% endfor %}
+
+        </tbody>
+
     </table>
-    <div class="mt-8 ml-6">
+
+    </div>
+
+
+    <!-- Back Button -->
+    <div class="mt-8 ml-2">
+
     <a href="{% url 'admin_home' %}"
        class="inline-flex items-center gap-2
               px-5 py-2 rounded-full
               bg-violet-200 text-violet-800
               hover:bg-violet-300 transition shadow-sm font-medium text-sm">
+
         ← Back to Admin Home
+
     </a>
-</div>
+
     </div>
+
 
 </div>
 

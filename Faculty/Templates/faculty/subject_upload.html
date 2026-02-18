@@ -15,22 +15,44 @@
         Upload Subject
     </h2>
 
+    <!-- GLOBAL ERRORS -->
+    {% if form.non_field_errors %}
+        <div class="bg-red-100 text-red-700 p-3 rounded-lg mb-4">
+            {{ form.non_field_errors }}
+        </div>
+    {% endif %}
+
     <form method="POST">
         {% csrf_token %}
 
+        <!-- Department -->
         <div class="mb-4">
             {{ form.department.label_tag }}
             {{ form.department|add_class:"w-full p-2 border rounded-lg" }}
+
+            <p class="text-red-500 text-sm">
+                {{ form.department.errors|striptags }}
+            </p>
         </div>
 
+        <!-- Course -->
         <div class="mb-4">
             {{ form.course.label_tag }}
             {{ form.course|add_class:"w-full p-2 border rounded-lg" }}
+
+            <p class="text-red-500 text-sm">
+                {{ form.course.errors|striptags }}
+            </p>
         </div>
 
+        <!-- Subject -->
         <div class="mb-6">
             {{ form.subject_name.label_tag }}
             {{ form.subject_name|add_class:"w-full p-2 border rounded-lg" }}
+
+            <p class="text-red-500 text-sm">
+                {{ form.subject_name.errors|striptags }}
+            </p>
         </div>
 
         <button type="submit"
@@ -40,21 +62,20 @@
     </form>
 
     <p class="text-center text-sm text-gray-500 mt-4">
-            Next →
-            <a href="{% url 'course_insert' %}" class="text-violet-600 font-semibold hover:underline">
-                Upload Course
-            </a>
-        </p>
-        <p class="text-center text-sm text-gray-500 mt-2">
-            Or, back to home?
-            <a href="{% url 'faculty_home' %}" class="text-violet-600 font-semibold hover:underline">
-                Back to Home
-            </a>
+        Next →
+        <a href="{% url 'course_insert' %}" class="text-violet-600 font-semibold hover:underline">
+            Upload Course
+        </a>
+    </p>
 
-        
+    <p class="text-center text-sm text-gray-500 mt-2">
+        Or, back to home?
+        <a href="{% url 'faculty_home' %}" class="text-violet-600 font-semibold hover:underline">
+            Back to Home
+        </a>
+    </p>
 
 </div>
-
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,HttpResponse,get_object_or_404
 from django.db.models import Count
-from Common.models import Department,FacultyRegistration,QuestionBank
+from Common.models import Department,FacultyRegistration,QuestionBank,Adminstrator
 
 from Common.forms import DepartmentForm,FacultyRegistrationForm,FacultyEditform
 
@@ -10,30 +10,39 @@ from django.db.models.deletion import ProtectedError
 
 from django.contrib.auth import authenticate, login
 
+from django.contrib.auth.hashers import check_password
+from django.contrib import messages
+
+
 
 def admin_login(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
 
-        user = authenticate(request, username=username, password=password)
+        try:
+            admin = Adminstrator.objects.get(user_name=username)
 
-        if user is not None and user.is_superuser:
-            login(request, user)
-            return redirect("admin_home")   
-        else:
-            messages.error(request, "Invalid admin credentials")
+            if check_password(password, admin.password):
+                request.session['admin_user'] = admin.user_name   
+                return redirect("admin_home")
+            else:
+                messages.error(request, "Invalid password")
+
+        except Adminstrator.DoesNotExist:
+            messages.error(request, "Invalid username")
 
     return render(request, "user/adlogin.html")
 
 
-
-
 from django.contrib.auth.decorators import login_required
 
-@login_required(login_url="admin_login")
 def admin_home(request):
+    if 'admin_user' not in request.session:
+        return redirect('admin_login')
+
     return render(request, "user/ahome.html")
+
 
 from django.contrib.auth import logout
 
@@ -143,7 +152,6 @@ def department_delete(request, id):
         )
 
     return redirect("department_list")
-
 
 
 def question_repetition_report(request):

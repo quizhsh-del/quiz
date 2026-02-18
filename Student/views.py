@@ -83,20 +83,29 @@ def student_logout(request):
 
 
 def student_pyq_questions(request):
+
     pyqs = QuestionBank.objects.select_related(
+
         'course_name',
         'course_name__department',
         'subject',
-        'subject__department'
+        'subject__course',
+        'subject__course__department'
+
     ).order_by(
+
         '-year',
         'course_name__department__department_name',
         'course_name__course_name',
         'subject__subject_name'
+
     )
 
+
     return render(request, 'student/pyq_questions.html', {
+
         'pyqs': pyqs
+
     })
 
 
@@ -229,7 +238,6 @@ def student_quiz_attempt(request, quiz_id):
     })
 
 
-
 def email_otp(request):
     return render(request,'email_otp.html')
 
@@ -244,7 +252,6 @@ def student_quiz_result(request, attempt_id):
         'quiz': quiz,        
         'questions': questions
     })
-
 
 
 def student_email_page(request):

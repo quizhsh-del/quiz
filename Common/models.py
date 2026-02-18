@@ -8,7 +8,6 @@ class Department(models.Model):
     def __str__(self):
         return self.department_name
 
-
 # Admin Registration
 
 class Adminstrator(models.Model):
@@ -54,9 +53,10 @@ class Course(models.Model):
     department = models.ForeignKey(
         Department,
         on_delete=models.CASCADE,
-        related_name = "COURSES"
+        related_name="COURSES"
     )
-    course_name = course_name = models.CharField(max_length=30)
+    course_name = models.CharField(max_length=30, unique=True)
+
     def __str__(self):
         return self.course_name
 
@@ -65,19 +65,22 @@ class Course(models.Model):
 class Subject(models.Model):
     course = models.ForeignKey(
         Course,
-        on_delete=models.PROTECT,
-        related_name = "SUBJECTS"
-    )
-    department = models.ForeignKey(
-        Department,
         on_delete=models.CASCADE,
-        related_name = "SUBJECTS"
+        related_name="SUBJECTS"
     )
-    subject_name =  models.CharField(max_length=30)
-    
+
+    subject_name = models.CharField(max_length=50)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['course', 'subject_name'],
+                name='unique_subject_per_course'
+            )
+        ]
+
     def __str__(self):
         return self.subject_name
-
 
 
 # Question Bank
@@ -101,17 +104,25 @@ class QuestionBank(models.Model):
 
 #mcq  Questions practise set
 class Quiz(models.Model):
+
+    faculty = models.ForeignKey(
+        FacultyRegistration,
+        on_delete=models.CASCADE,
+        related_name="quizzes"
+    )
+
     subject = models.ForeignKey(
         Subject,
-        on_delete=models.PROTECT,
-        related_name = "QUESTIONS"
+        on_delete=models.PROTECT
     )
+
     semester = models.CharField(max_length=30)
     quiz_name = models.CharField(max_length=40)
     pass_mark = models.IntegerField()
 
     def __str__(self):
         return self.quiz_name
+
 
 
 # Result
